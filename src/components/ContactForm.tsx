@@ -1,0 +1,252 @@
+"use client"
+
+import React, { useState } from 'react'
+import Button from '@/components/Button'
+
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    patientName: '',
+    patientAge: '',
+    hospital: '',
+    date: '',
+    departure: '',
+    message: '',
+    agreement: false
+  })
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitResult, setSubmitResult] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null)
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+  
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target
+    setFormData(prev => ({ ...prev, [name]: checked }))
+  }
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    // 여기서 실제 폼 제출 로직을 구현할 수 있습니다.
+    // 예: API 호출
+    
+    // 제출 성공 시뮬레이션
+    setTimeout(() => {
+      setSubmitResult({
+        success: true,
+        message: '문의가 성공적으로 접수되었습니다. 곧 담당자가 연락드릴 예정입니다.'
+      })
+      setIsSubmitting(false)
+      
+      // 폼 초기화
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        patientName: '',
+        patientAge: '',
+        hospital: '',
+        date: '',
+        departure: '',
+        message: '',
+        agreement: false
+      })
+      
+      // 3초 후 메시지 제거
+      setTimeout(() => {
+        setSubmitResult(null)
+      }, 5000)
+    }, 1500)
+  }
+  
+  return (
+    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-custom p-8">
+      <h3 className="text-2xl font-semibold mb-6">서비스 문의하기</h3>
+      
+      {submitResult && (
+        <div className={`p-4 mb-6 rounded-lg ${submitResult.success ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+          {submitResult.message}
+        </div>
+      )}
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* 신청자 정보 */}
+        <div className="form-group">
+          <label htmlFor="name" className="form-label">신청자 이름 <span className="text-red-500">*</span></label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="input"
+            required
+            placeholder="예: 홍길동"
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="phone" className="form-label">연락처 <span className="text-red-500">*</span></label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="input"
+            required
+            placeholder="예: 010-1234-5678"
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">이메일</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="input"
+            placeholder="예: example@gmail.com"
+          />
+        </div>
+        
+        {/* 환자 정보 */}
+        <div className="form-group">
+          <label htmlFor="patientName" className="form-label">환자 이름 <span className="text-red-500">*</span></label>
+          <input
+            type="text"
+            id="patientName"
+            name="patientName"
+            value={formData.patientName}
+            onChange={handleChange}
+            className="input"
+            required
+            placeholder="예: 김철수"
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="patientAge" className="form-label">환자 나이</label>
+          <input
+            type="text"
+            id="patientAge"
+            name="patientAge"
+            value={formData.patientAge}
+            onChange={handleChange}
+            className="input"
+            placeholder="예: 75"
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="departure" className="form-label">출발 지역 <span className="text-red-500">*</span></label>
+          <select
+            id="departure"
+            name="departure"
+            value={formData.departure}
+            onChange={handleChange}
+            className="input"
+            required
+          >
+            <option value="">지역을 선택해주세요</option>
+            <option value="경상권">경상권 (부산/대구/울산/경북/경남)</option>
+            <option value="전라권">전라권 (광주/전남/전북)</option>
+            <option value="충청권">충청권 (대전/세종/충남/충북)</option>
+            <option value="강원권">강원권</option>
+            <option value="제주권">제주권</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        
+        {/* 병원 정보 */}
+        <div className="form-group">
+          <label htmlFor="hospital" className="form-label">방문 병원 <span className="text-red-500">*</span></label>
+          <input
+            type="text"
+            id="hospital"
+            name="hospital"
+            value={formData.hospital}
+            onChange={handleChange}
+            className="input"
+            required
+            placeholder="예: 서울아산병원"
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="date" className="form-label">방문 예정일 <span className="text-red-500">*</span></label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="input"
+            required
+          />
+        </div>
+      </div>
+      
+      {/* 추가 메시지 */}
+      <div className="form-group mt-4">
+        <label htmlFor="message" className="form-label">추가 문의사항</label>
+        <textarea
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          className="input h-32 resize-none"
+          placeholder="필요한 서비스나 특별히 요청하실 사항이 있으면 알려주세요."
+        />
+      </div>
+      
+      {/* 개인정보 동의 */}
+      <div className="form-group mt-6">
+        <div className="flex items-start">
+          <div className="flex items-center h-5">
+            <input
+              id="agreement"
+              name="agreement"
+              type="checkbox"
+              checked={formData.agreement}
+              onChange={handleCheckboxChange}
+              className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              required
+            />
+          </div>
+          <div className="ml-3 text-sm">
+            <label htmlFor="agreement" className="font-medium text-gray-700">개인정보 수집 및 이용 동의 <span className="text-red-500">*</span></label>
+            <p className="text-gray-500">문의 접수 및 답변을 위한 최소한의 개인정보만 수집합니다. 자세한 내용은 개인정보처리방침을 확인해주세요.</p>
+          </div>
+        </div>
+      </div>
+      
+      {/* 제출 버튼 */}
+      <div className="mt-8">
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          fullWidth
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? '접수 중...' : '문의하기'}
+        </Button>
+      </div>
+    </form>
+  )
+}
+
+export default ContactForm
