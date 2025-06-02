@@ -36,37 +36,58 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitResult(null)
     
-    // 여기서 실제 폼 제출 로직을 구현할 수 있습니다.
-    // 예: API 호출
-    
-    // 제출 성공 시뮬레이션
-    setTimeout(() => {
-      setSubmitResult({
-        success: true,
-        message: '문의가 성공적으로 접수되었습니다. 곧 담당자가 연락드릴 예정입니다.'
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       })
+      
+      const result = await response.json()
+      
+      if (result.success) {
+        setSubmitResult({
+          success: true,
+          message: result.message
+        })
+        
+        // 폼 초기화
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          patientName: '',
+          patientAge: '',
+          hospital: '',
+          date: '',
+          departure: '',
+          message: '',
+          agreement: false
+        })
+      } else {
+        setSubmitResult({
+          success: false,
+          message: result.message || '문의 접수 중 오류가 발생했습니다.'
+        })
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitResult({
+        success: false,
+        message: '네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+      })
+    } finally {
       setIsSubmitting(false)
       
-      // 폼 초기화
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        patientName: '',
-        patientAge: '',
-        hospital: '',
-        date: '',
-        departure: '',
-        message: '',
-        agreement: false
-      })
-      
-      // 3초 후 메시지 제거
+      // 5초 후 메시지 제거
       setTimeout(() => {
         setSubmitResult(null)
       }, 5000)
-    }, 1500)
+    }
   }
   
   return (
@@ -74,7 +95,11 @@ const ContactForm = () => {
       <h3 className="text-2xl font-semibold mb-6">서비스 문의하기</h3>
       
       {submitResult && (
-        <div className={`p-4 mb-6 rounded-lg ${submitResult.success ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+        <div className={`p-4 mb-6 rounded-lg ${
+          submitResult.success 
+            ? 'bg-green-50 text-green-700 border border-green-200' 
+            : 'bg-red-50 text-red-700 border border-red-200'
+        }`}>
           {submitResult.message}
         </div>
       )}
@@ -195,6 +220,7 @@ const ContactForm = () => {
             onChange={handleChange}
             className="input"
             required
+            min={new Date().toISOString().split('T')[0]} // 오늘 이후 날짜만 선택 가능
           />
         </div>
       </div>
