@@ -5,7 +5,6 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.json()
     
-    // 데이터 검증
     const {
       name,
       phone,
@@ -14,97 +13,144 @@ export async function POST(request: NextRequest) {
       patientAge,
       hospital,
       date,
+      time,
       departure,
       message,
       agreement
     } = formData
 
     // 필수 필드 검증
-    if (!name || !phone || !patientName || !hospital || !date || !departure || !agreement) {
+    if (!name || !phone || !patientName || !hospital || !date || !time || !departure || !agreement) {
       return NextResponse.json(
         { success: false, message: '필수 항목을 모두 입력해주세요.' },
         { status: 400 }
       )
     }
 
-    // 이메일 전송 설정
+    // 문의 번호 생성
+    const inquiryNumber = `INQ-${new Date().toISOString().slice(0,10).replace(/-/g, '')}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`
+
+    // Gmail 설정 (2단계 인증 + 앱 비밀번호)
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // your-email@gmail.com
+        pass: process.env.EMAIL_PASS, // Gmail 앱 비밀번호 (16자리)
       },
+      // 추가 설정 (안정성 향상)
+      secure: true,
+      logger: true, // 디버깅용
+      debug: true,  // 디버깅용
     })
 
-    // 관리자에게 보낼 이메일
+    // 관리자용 이메일 내용
     const adminEmailContent = `
-      새로운 서비스 문의가 접수되었습니다.
+🔔 새로운 온맘동행 서비스 문의
 
-      === 신청자 정보 ===
-      이름: ${name}
-      연락처: ${phone}
-      이메일: ${email || '미제공'}
+📋 문의번호: ${inquiryNumber}
+📅 접수시간: ${new Date().toLocaleString('ko-KR')}
 
-      === 환자 정보 ===
-      환자 이름: ${patientName}
-      환자 나이: ${patientAge || '미제공'}
+👤 신청자 정보
+━━━━━━━━━━━━━━━━━
+• 이름: ${name}
+• 연락처: ${phone}
+• 이메일: ${email || '미제공'}
 
-      === 서비스 정보 ===
-      출발 지역: ${departure}
-      방문 병원: ${hospital}
-      방문 예정일: ${date}
+🏥 환자 정보  
+━━━━━━━━━━━━━━━━━
+• 환자명: ${patientName}
+• 나이: ${patientAge || '미제공'}
 
-      === 추가 문의사항 ===
-      ${message || '없음'}
+🚗 서비스 정보
+━━━━━━━━━━━━━━━━━
+• 출발지역: ${departure}
+• 방문병원: ${hospital}
+• 희망날짜: ${date}
+• 진료시간: ${time}
 
-      접수 시간: ${new Date().toLocaleString('ko-KR')}
-    `
+💬 추가 요청사항
+━━━━━━━━━━━━━━━━━
+${message || '특별한 요청사항 없음'}
 
-    // 고객에게 보낼 확인 이메일
+⚡ 처리 필요 사항
+━━━━━━━━━━━━━━━━━
+1. 24시간 내 고객 연락 (${phone})
+2. 해당 날짜/시간 서비스 가능 여부 확인
+3. 견적 산출 및 상세 상담 진행
+4. 예약 확정 처리
+
+고객 연락처: ${phone}
+    `.trim()
+
+    // 고객용 이메일 내용
     const customerEmailContent = `
-      안녕하세요 ${name}님,
+안녕하세요 ${name}님,
 
-      온맘동행 서비스 문의가 정상적으로 접수되었습니다.
+온맘동행에 소중한 문의를 주셔서 감사합니다.
 
-      접수 내용:
-      - 환자명: ${patientName}
-      - 방문 병원: ${hospital}
-      - 방문 예정일: ${date}
+📋 문의 접수 완료
+━━━━━━━━━━━━━━━━━
+• 문의번호: ${inquiryNumber}
+• 접수시간: ${new Date().toLocaleString('ko-KR')}
 
-      담당자가 영업시간 내에 연락드릴 예정입니다.
-      추가 문의사항이 있으시면 010-1234-5678로 연락 부탁드립니다.
+📝 문의하신 내용
+━━━━━━━━━━━━━━━━━
+• 환자명: ${patientName}
+• 방문병원: ${hospital}
+• 희망날짜: ${date}
+• 진료시간: ${time}
+• 출발지역: ${departure}
 
-      감사합니다.
-      온맘동행 드림
-    `
+💌 안내사항
+━━━━━━━━━━━━━━━━━
+1. 담당자가 24시간 이내에 연락드리겠습니다.
+2. 문의하신 내용에 대해 상세한 상담을 진행해드리겠습니다.
+3. 추가 문의사항이 있으시면 아래 연락처로 문의해 주세요.
 
-    // 관리자에게 이메일 전송
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL,
-      subject: `[온맘동행] 새로운 서비스 문의 - ${name}님`,
-      text: adminEmailContent,
-    })
+📞 문의전화: 02-1234-5678
+✉️ 이메일: contact@onmam.com
 
-    // 고객에게 확인 이메일 전송 (이메일 제공시에만)
-    if (email) {
+감사합니다.
+온맘동행 드림
+    `.trim()
+
+    // 이메일 전송
+    try {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
-        to: email,
-        subject: '[온맘동행] 서비스 문의 접수 확인',
-        text: customerEmailContent,
+        to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
+        subject: `[온맘동행] 새로운 서비스 문의 (${inquiryNumber})`,
+        text: adminEmailContent,
       })
+
+      if (email) {
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: '[온맘동행] 문의 접수 완료',
+          text: customerEmailContent,
+        })
+      }
+      
+      console.log('✅ Gmail 이메일 전송 성공')
+    } catch (emailError) {
+      console.error('❌ 이메일 전송 실패:', emailError)
+      throw emailError // 상위 catch 블록에서 처리하도록 에러 전파
     }
 
     return NextResponse.json({
       success: true,
-      message: '문의가 성공적으로 접수되었습니다. 곧 담당자가 연락드릴 예정입니다.'
+      message: '문의가 성공적으로 접수되었습니다.',
+      inquiryNumber
     })
 
   } catch (error) {
-    console.error('Contact form error:', error)
+    console.error('문의 접수 중 오류 발생:', error)
     return NextResponse.json(
-      { success: false, message: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
+      { 
+        success: false, 
+        message: '문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' 
+      },
       { status: 500 }
     )
   }

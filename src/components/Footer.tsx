@@ -53,16 +53,16 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4 text-white">고객지원</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <Link href="#faq" className="hover:text-white">자주 묻는 질문</Link>
+                <Link href="/faq" className="hover:text-white">자주 묻는 질문</Link>
               </li>
               <li>
-                <Link href="#terms" className="hover:text-white">이용약관</Link>
+                <Link href="/terms" className="hover:text-white">이용약관</Link>
               </li>
               <li>
-                <Link href="#privacy" className="hover:text-white">개인정보처리방침</Link>
+                <Link href="/privacy" className="hover:text-white">개인정보처리방침</Link>
               </li>
               <li>
-                <Link href="#contact" className="hover:text-white">문의하기</Link>
+                <Link href="/contact" className="hover:text-white">문의하기</Link>
               </li>
             </ul>
           </div>
@@ -76,9 +76,9 @@ const Footer = () => {
               <p className="mt-1">주소: 서울특별시 강남구 테헤란로 123 온맘빌딩 4층</p>
             </div>
             <div className="flex space-x-4">
-              <Link href="#terms" className="hover:text-white">이용약관</Link>
-              <Link href="#privacy" className="hover:text-white">개인정보처리방침</Link>
-              <Link href="#contact" className="hover:text-white">고객센터</Link>
+              <Link href="/terms" className="hover:text-white">이용약관</Link>
+              <Link href="/privacy" className="hover:text-white">개인정보처리방침</Link>
+              <Link href="/contact" className="hover:text-white">고객센터</Link>
             </div>
           </div>
         </div>

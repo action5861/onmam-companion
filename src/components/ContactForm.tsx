@@ -12,6 +12,7 @@ const ContactForm = () => {
     patientAge: '',
     hospital: '',
     date: '',
+    time: '',
     departure: '',
     message: '',
     agreement: false
@@ -64,10 +65,14 @@ const ContactForm = () => {
           patientAge: '',
           hospital: '',
           date: '',
+          time: '',
           departure: '',
           message: '',
           agreement: false
         })
+        
+        // 성공 시 페이지 상단으로 스크롤
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         setSubmitResult({
           success: false,
@@ -175,26 +180,6 @@ const ContactForm = () => {
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="departure" className="form-label">출발 지역 <span className="text-red-500">*</span></label>
-          <select
-            id="departure"
-            name="departure"
-            value={formData.departure}
-            onChange={handleChange}
-            className="input"
-            required
-          >
-            <option value="">지역을 선택해주세요</option>
-            <option value="경상권">경상권 (부산/대구/울산/경북/경남)</option>
-            <option value="전라권">전라권 (광주/전남/전북)</option>
-            <option value="충청권">충청권 (대전/세종/충남/충북)</option>
-            <option value="강원권">강원권</option>
-            <option value="제주권">제주권</option>
-            <option value="기타">기타</option>
-          </select>
-        </div>
-        
         {/* 병원 정보 */}
         <div className="form-group">
           <label htmlFor="hospital" className="form-label">방문 병원 <span className="text-red-500">*</span></label>
@@ -222,6 +207,61 @@ const ContactForm = () => {
             required
             min={new Date().toISOString().split('T')[0]} // 오늘 이후 날짜만 선택 가능
           />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="time" className="form-label">진료 예약시간 <span className="text-red-500">*</span></label>
+          <select
+            id="time"
+            name="time"
+            value={formData.time}
+            onChange={handleChange}
+            className="input"
+            required
+          >
+            <option value="">시간을 선택해주세요</option>
+            <option value="09:00">오전 9:00</option>
+            <option value="09:30">오전 9:30</option>
+            <option value="10:00">오전 10:00</option>
+            <option value="10:30">오전 10:30</option>
+            <option value="11:00">오전 11:00</option>
+            <option value="11:30">오전 11:30</option>
+            <option value="12:00">오후 12:00</option>
+            <option value="12:30">오후 12:30</option>
+            <option value="13:00">오후 1:00</option>
+            <option value="13:30">오후 1:30</option>
+            <option value="14:00">오후 2:00</option>
+            <option value="14:30">오후 2:30</option>
+            <option value="15:00">오후 3:00</option>
+            <option value="15:30">오후 3:30</option>
+            <option value="16:00">오후 4:00</option>
+            <option value="16:30">오후 4:30</option>
+            <option value="17:00">오후 5:00</option>
+            <option value="17:30">오후 5:30</option>
+          </select>
+          <small className="text-gray-500 text-xs mt-1 block">
+            ※ 실제 예약 가능 여부는 별도 확인 후 안내드립니다
+          </small>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="departure" className="form-label">출발 지역 <span className="text-red-500">*</span></label>
+          <select
+            id="departure"
+            name="departure"
+            value={formData.departure}
+            onChange={handleChange}
+            className="input"
+            required
+          >
+            <option value="">지역을 선택해주세요</option>
+            <option value="경상권">경상권 (부산/대구/울산/경북/경남)</option>
+            <option value="전라권">전라권 (광주/전남/전북)</option>
+            <option value="충청권">충청권 (대전/세종/충남/충북)</option>
+            <option value="강원권">강원권</option>
+            <option value="제주권">제주권</option>
+            <option value="기타">기타</option>
+          </select>
         </div>
       </div>
       
