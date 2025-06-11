@@ -19,7 +19,7 @@ const ServiceCard = ({
   className = '',
 }: ServiceCardProps) => {
   return (
-    <div className={`card service-card-hover ${className}`}>
+    <div className={`group bg-white rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-primary-100 hover:-translate-y-1 ${className}`}>
       {imageUrl && (
         <div className="relative w-full h-64 mb-4 overflow-hidden rounded-lg">
           <Image
@@ -41,7 +41,7 @@ const ServiceCard = ({
         )}
         
         <div>
-          <h3 className="text-xl font-semibold mb-2">{title}</h3>
+          <h3 className="text-xl font-semibold mb-2 group-hover:text-primary-600 transition-colors duration-300">{title}</h3>
           <p className="text-gray-600">{description}</p>
         </div>
       </div>

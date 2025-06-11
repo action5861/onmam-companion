@@ -16,11 +16,12 @@ export async function POST(request: NextRequest) {
       time,
       departure,
       message,
-      agreement
+      agreement,
+      serviceType
     } = formData
 
     // 필수 필드 검증
-    if (!name || !phone || !patientName || !hospital || !date || !time || !departure || !agreement) {
+    if (!name || !phone || !email || !patientName || !hospital || !date || !time || !departure || !agreement || !serviceType) {
       return NextResponse.json(
         { success: false, message: '필수 항목을 모두 입력해주세요.' },
         { status: 400 }
@@ -43,6 +44,11 @@ export async function POST(request: NextRequest) {
       debug: true,  // 디버깅용
     })
 
+    // 서비스 타입에 따른 설명
+    const serviceTypeDescription = serviceType === 'homeToHome' 
+      ? 'Home to Home 서비스 (집에서 집까지)' 
+      : '교통허브 서비스 (KTX역/터미널/공항에서 병원까지)'
+
     // 관리자용 이메일 내용
     const adminEmailContent = `
 🔔 새로운 온맘동행 서비스 문의
@@ -63,6 +69,7 @@ export async function POST(request: NextRequest) {
 
 🚗 서비스 정보
 ━━━━━━━━━━━━━━━━━
+• 서비스 유형: ${serviceTypeDescription}
 • 출발지역: ${departure}
 • 방문병원: ${hospital}
 • 희망날짜: ${date}
@@ -95,6 +102,7 @@ ${message || '특별한 요청사항 없음'}
 
 📝 문의하신 내용
 ━━━━━━━━━━━━━━━━━
+• 서비스 유형: ${serviceTypeDescription}
 • 환자명: ${patientName}
 • 방문병원: ${hospital}
 • 희망날짜: ${date}

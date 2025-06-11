@@ -24,13 +24,25 @@ const ServicesSection = () => {
             />
           ))}
         </div>
-        
-        <div className="mt-16 bg-white shadow-xl rounded-xl p-8 border-l-4 border-primary-600">
-          <h3 className="text-2xl font-semibold mb-4">가족 소통 서비스 (안심콜)</h3>
-          <p className="text-lg text-gray-700">
-            진행 상황(픽업 완료, 병원 도착, 진료 후 출발 등)을 보호자께 문자로 알려드려 
-            멀리서도 안심하실 수 있도록 합니다. 필요시 진료 내용도 정리하여 전달해 드립니다.
-          </p>
+
+        <div className="mt-16 bg-white rounded-2xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] transition-all duration-300 border border-gray-100">
+          <div className="mb-6 md:mb-8">
+            <h3 className="text-xl md:text-2xl font-bold text-primary-600 mb-2 md:mb-4">가족 소통 서비스</h3>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">안심콜</h2>
+            <p className="text-base md:text-xl text-gray-600">
+              진행 상황을 실시간으로 알려드려 멀리서도 안심하실 수 있습니다
+            </p>
+          </div>
+          <div className="space-y-4 md:space-y-6">
+            <div className="flex items-start gap-3 md:gap-4 bg-gray-50 p-3 md:p-4 rounded-xl">
+              <span className="text-3xl md:text-4xl flex-shrink-0">📱</span>
+              <p className="text-base md:text-lg text-gray-700">픽업 완료, 병원 도착, 진료 후 출발 등 진행 상황을 문자로 알려드립니다</p>
+            </div>
+            <div className="flex items-start gap-3 md:gap-4 bg-gray-50 p-3 md:p-4 rounded-xl">
+              <span className="text-3xl md:text-4xl flex-shrink-0">📝</span>
+              <p className="text-base md:text-lg text-gray-700">필요시 진료 내용도 정리하여 전달해 드립니다</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

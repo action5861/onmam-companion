@@ -16,8 +16,8 @@ const HeroSection = () => {
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 animate-slide-up">
-              온맘동행이 KTX역/터미널 도착부터 귀가까지<br />
-              모든 여정을 안전하고 편안하게 함께합니다.
+              온맘동행이 어르신의 든든한 지킴이가 되어<br />
+              안전하고 편안한 여정을 함께합니다
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
@@ -42,21 +42,21 @@ const HeroSection = () => {
           </div>
           
           <div className="relative rounded-xl overflow-hidden shadow-xl h-80 md:h-96 lg:h-[500px]">
-            <div className="absolute inset-0 bg-black/20 z-10 flex items-end justify-center pb-8">
-              <div className="bg-white/80 p-6 rounded-lg max-w-sm text-center backdrop-blur-sm">
-                <p className="text-lg font-semibold text-primary-500 mb-2">
+            <div className="absolute inset-0 bg-black/20 z-10 flex items-end justify-center pb-4 md:pb-8">
+              <div className="bg-white/70 p-3 md:p-4 rounded-lg max-w-[85%] md:max-w-[320px] text-center backdrop-blur-sm">
+                <p className="text-sm md:text-base font-semibold text-primary-500 mb-1">
                   60대 이상 어르신 맞춤형
                 </p>
-                <h3 className="text-2xl font-bold mb-2 text-gray-700">
+                <h3 className="text-lg md:text-xl font-bold mb-1 text-gray-700">
                   병원 동행 서비스
                 </h3>
-                <p className="text-gray-500">
+                <p className="text-xs md:text-sm text-gray-600">
                   지방 거주 어르신들의 서울/경기 대형병원 진료를 위한 전문 케어 서비스
                 </p>
               </div>
             </div>
             <img
-              src="/images/main-banner.jpg"
+              src="/images/main-banner.png"
               alt="병원 동행 서비스"
               className="w-full h-full object-cover"
             />

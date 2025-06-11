@@ -15,7 +15,8 @@ const ContactForm = () => {
     time: '',
     departure: '',
     message: '',
-    agreement: false
+    agreement: false,
+    serviceType: ''
   })
   
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -68,7 +69,8 @@ const ContactForm = () => {
           time: '',
           departure: '',
           message: '',
-          agreement: false
+          agreement: false,
+          serviceType: ''
         })
         
         // 성공 시 페이지 상단으로 스크롤
@@ -110,6 +112,54 @@ const ContactForm = () => {
       )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* 서비스 선택 */}
+        <div className="form-group md:col-span-2">
+          <label className="form-label">서비스 선택 <span className="text-red-500">*</span></label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative">
+              <input
+                type="radio"
+                id="homeToHome"
+                name="serviceType"
+                value="homeToHome"
+                checked={formData.serviceType === 'homeToHome'}
+                onChange={handleChange}
+                className="sr-only peer"
+                required
+              />
+              <label
+                htmlFor="homeToHome"
+                className="flex flex-col items-center justify-center p-4 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary-600 peer-checked:text-primary-600 hover:bg-gray-50"
+              >
+                <span className="text-2xl mb-2">🏠→🏥→🏠</span>
+                <span className="font-medium">Home to Home</span>
+                <span className="text-sm text-center mt-1">집에서 집까지, 완벽한 프리미엄 케어</span>
+              </label>
+            </div>
+            
+            <div className="relative">
+              <input
+                type="radio"
+                id="transportHub"
+                name="serviceType"
+                value="transportHub"
+                checked={formData.serviceType === 'transportHub'}
+                onChange={handleChange}
+                className="sr-only peer"
+                required
+              />
+              <label
+                htmlFor="transportHub"
+                className="flex flex-col items-center justify-center p-4 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary-600 peer-checked:text-primary-600 hover:bg-gray-50"
+              >
+                <span className="text-2xl mb-2">🚉</span>
+                <span className="font-medium">교통허브</span>
+                <span className="text-sm text-center mt-1">KTX역/터미널/공항에서 만나 병원까지</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
         {/* 신청자 정보 */}
         <div className="form-group">
           <label htmlFor="name" className="form-label">신청자 이름 <span className="text-red-500">*</span></label>
@@ -140,7 +190,7 @@ const ContactForm = () => {
         </div>
         
         <div className="form-group">
-          <label htmlFor="email" className="form-label">이메일</label>
+          <label htmlFor="email" className="form-label">이메일 <span className="text-red-500">*</span></label>
           <input
             type="email"
             id="email"
@@ -148,8 +198,12 @@ const ContactForm = () => {
             value={formData.email}
             onChange={handleChange}
             className="input"
+            required
             placeholder="예: example@gmail.com"
           />
+          <small className="text-gray-500 text-xs mt-1 block">
+            ※ 비용 내역이 이메일로 전송됩니다
+          </small>
         </div>
         
         {/* 환자 정보 */}

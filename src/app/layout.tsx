@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: '온맘동행 | 지방 거주 어르신 서울/경기 병원 동행 서비스',
-  description: '지방에 거주하는 60대 이상 노인 분들의 서울/경기 지역 병원 방문을 위한 전문 동행 서비스, 교통 허브 픽업부터 병원 동행까지 어르신의 든든한 동반자가 되어드립니다.',
+  description: '온맘동행이 어르신의 든든한 지킴이가 되어 안전하고 편안한 병원동행을 함께합니다',
 }
 
 export default function RootLayout({
