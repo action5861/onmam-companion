@@ -88,6 +88,60 @@
   .form-label {
     @apply block text-sm font-medium text-gray-700 mb-1;
   }
+  
+  .typewriter-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  .typewriter-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid rgba(15, 82, 186, 0.75);
+    width: 0;
+    animation: 
+      typing 3s steps(30, end) 0s forwards,
+      blink-caret 1.5s step-end infinite;
+  }
+
+  .typewriter-text-second {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid rgba(30, 82, 186, 0.75);
+    width: 0;
+    animation: 
+      typing 1.5s steps(30, end) 7s forwards,
+      blink-caret 1.5s step-end infinite;
+  }
+
+  .typewriter-text-third {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid rgba(30, 82, 186, 0.75);
+    width: 0;
+    animation: 
+      typing 1.5s steps(15, end) 8.5s forwards,
+      blink-caret 1.5s step-end infinite;
+  }
+
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes blink-caret {
+    0%, 100% { border-color: transparent }
+    50% { border-color: rgba(15, 82, 186, 0.75) }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 }
 
 .service-card-hover {

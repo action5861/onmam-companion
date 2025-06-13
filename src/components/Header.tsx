@@ -3,60 +3,39 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
-  const [isVisible, setIsVisible] = useState(true)
-  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      
-      // 스크롤 방향 감지
-      if (currentScrollY > lastScrollY) {
-        // 아래로 스크롤
-        setIsVisible(false)
-      } else {
-        // 위로 스크롤
-        setIsVisible(true)
-      }
-
       // 스크롤 위치에 따른 스타일 변경
       if (currentScrollY > 10) {
         setIsScrolled(true)
       } else {
         setIsScrolled(false)
       }
-
       setLastScrollY(currentScrollY)
     }
-
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY])
 
   const handleNavigation = (section: string) => {
-    if (pathname !== '/') {
-      // 현재 페이지가 메인 페이지가 아닌 경우, 메인 페이지로 이동 후 해당 섹션으로 스크롤
-      window.location.href = `/#${section}`
-    } else {
-      // 현재 페이지가 메인 페이지인 경우, 해당 섹션으로 스크롤
-      const element = document.getElementById(section)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
   return (
     <header 
-      className={`w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
-      } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
+      }`}
     >
       <div className="container flex justify-between items-center">
         <Link href="/" className="flex items-center">
