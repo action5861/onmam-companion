@@ -1,22 +1,34 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Button from '@/components/Button'
 import { Inter } from 'next/font/google'
 import { cn } from "@/lib/utils";
 import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const HeroSection = () => {
   const [showAfterTyping, setShowAfterTyping] = useState(false);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const typewriterRef = useRef<HTMLSpanElement>(null);
 
-  // 타이핑 효과가 끝나면 호출되는 함수
-  const handleTypingEnd = () => {
-    setTimeout(() => {
-      setShowAfterTyping(true);
-    }, 500); // 1초(1000ms) 딜레이 후 표시
+  useEffect(() => {
+    const typewriterElement = typewriterRef.current;
+    if (!typewriterElement) return;
+
+    const handleAnimationEnd = () => {
+    setIsTypingComplete(true);
+    setShowAfterTyping(true);
   };
+
+    typewriterElement.addEventListener('animationend', handleAnimationEnd);
+
+    return () => {
+      typewriterElement.removeEventListener('animationend', handleAnimationEnd);
+    };
+  }, []);
 
   return (
     <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-to-r from-blue-50 to-teal-50">
@@ -45,44 +57,42 @@ const HeroSection = () => {
               <div className="relative w-full max-w-[24em] mx-auto">
                 <div className="typewriter-container">
                   <span
+                    ref={typewriterRef}
                     className={`block text-4xl md:text-5xl lg:text-6xl mb-12 bg-primary-50 px-6 py-4 rounded-lg ${inter.className} whitespace-nowrap text-center typewriter-text`}
-                    onAnimationEnd={handleTypingEnd}
                   >
                     "멀리 있어도 괜찮습니다."
                   </span>
                 </div>
               </div>
-              {showAfterTyping && (
-                <>
-                  <span className="block text-3xl md:text-4xl lg:text-5xl text-gray-800 text-center font-bold">
-                    이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고<br />
-                    <span className="text-primary-600 font-extrabold">안심</span>하세요.
-                  </span>
-                  <p className="text-xl text-gray-600 mb-8 mt-10 animate-slide-up">
-                    지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br />
-                    공항·KTX역·터미널 마중부터 병원 진료 동행, 안전한 귀가까지<br />
-                    모든 과정을 전문 매니저가 함께합니다
-                  </p>
-                  <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
-                    <Button 
-                      variant="primary" 
-                      size="lg" 
-                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="w-full sm:w-auto"
-                    >
-                      서비스 문의하기
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="w-full sm:w-auto"
-                    >
-                      서비스 알아보기
-                    </Button>
-                  </div>
-                </>
-              )}
+              <div className={`transition-all duration-500 ${showAfterTyping ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+                <span className="block text-3xl md:text-4xl lg:text-5xl text-gray-800 text-center font-bold">
+                  이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고<br />
+                  <span className="text-primary-600 font-extrabold">안심</span>하세요.
+                </span>
+                <p className="text-xl text-gray-600 mb-8 mt-10 animate-slide-up">
+                  지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br />
+                  공항·KTX역·터미널 마중부터 병원 진료 동행, 안전한 귀가까지<br />
+                  모든 과정을 전문 매니저가 함께합니다
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+                  <Button 
+                    variant="primary" 
+                    size="lg" 
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full sm:w-auto"
+                  >
+                    서비스 문의하기
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full sm:w-auto"
+                  >
+                    서비스 알아보기
+                  </Button>
+                </div>
+              </div>
             </h1>
           </div>
           
@@ -101,10 +111,14 @@ const HeroSection = () => {
                 </p>
               </div>
             </div>
-            <img
-              src="/images/main-banner.png"
+            <Image
+              src="/images/main-banner.webp"
               alt="병원 동행 서비스"
-              className="w-full h-full object-cover"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              quality={85}
             />
           </div>
         </div>

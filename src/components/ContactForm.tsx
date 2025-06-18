@@ -16,7 +16,8 @@ const ContactForm = () => {
     departure: '',
     message: '',
     agreement: false,
-    serviceType: ''
+    serviceType: '',
+    serviceDuration: ''
   })
   
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -70,7 +71,8 @@ const ContactForm = () => {
           departure: '',
           message: '',
           agreement: false,
-          serviceType: ''
+          serviceType: '',
+          serviceDuration: ''
         })
         
         // 성공 시 페이지 상단으로 스크롤
@@ -158,6 +160,26 @@ const ContactForm = () => {
               </label>
             </div>
           </div>
+        </div>
+
+        {/* 서비스 이용시간 */}
+        <div className="form-group md:col-span-2">
+          <label htmlFor="serviceDuration" className="form-label">서비스 이용시간 <span className="text-red-500">*</span></label>
+          <select
+            id="serviceDuration"
+            name="serviceDuration"
+            value={formData.serviceDuration}
+            onChange={handleChange}
+            className="input"
+            required
+          >
+            <option value="">이용시간을 선택해주세요</option>
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+              <option key={hour} value={`${hour}`}>
+                {hour}시간
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* 신청자 정보 */}

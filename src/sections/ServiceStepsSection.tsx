@@ -86,7 +86,7 @@ const StepCard = ({ number, title, description, reverse = false }: StepCardProps
 const steps = [
   {
     title: '상담 및 예약',
-    description: '전화 또는 온라인 채널을 통해 방문 일정, 병원, 어르신 정보 등을 알려주시면 친절하게 상담해 드립니다. 최적의 교통 허브와 이동 계획을 함께 상담해 드립니다.'
+    description: '전화 또는 서비스 문의를 통해 방문 일정, 병원, 어르신 정보 등을 알려주시면 친절하게 상담해 드립니다. 최적의 교통 허브와 이동 계획을 함께 상담해 드립니다.'
   },
   {
     title: '예약 확정',

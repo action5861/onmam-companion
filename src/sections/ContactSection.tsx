@@ -1,5 +1,21 @@
 import React from 'react'
-import ContactForm from '@/components/ContactForm'
+import dynamic from 'next/dynamic'
+
+const ContactForm = dynamic(() => import('@/components/ContactForm'), {
+  loading: () => (
+    <div className="h-96 bg-gray-50 rounded-xl animate-pulse">
+      <div className="h-full flex items-center justify-center">
+        <div className="w-full max-w-md space-y-4 p-4">
+          <div className="h-10 bg-gray-200 rounded-lg"></div>
+          <div className="h-10 bg-gray-200 rounded-lg"></div>
+          <div className="h-32 bg-gray-200 rounded-lg"></div>
+          <div className="h-10 bg-gray-200 rounded-lg"></div>
+        </div>
+      </div>
+    </div>
+  ),
+  ssr: false
+})
 
 const ContactSection = () => {
   return (

@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
       departure,
       message,
       agreement,
-      serviceType
+      serviceType,
+      serviceDuration = '4' // 기본값 4시간
     } = formData
 
     // 필수 필드 검증
@@ -31,17 +32,47 @@ export async function POST(request: NextRequest) {
     // 문의 번호 생성
     const inquiryNumber = `INQ-${new Date().toISOString().slice(0,10).replace(/-/g, '')}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`
 
+    // 답변 초안 생성
+    const replyResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/generate-reply`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        inquiryData: {
+          name,
+          phone,
+          email,
+          patientName,
+          patientAge,
+          hospital,
+          date,
+          time,
+          departure,
+          message,
+          serviceType,
+          inquiryNumber,
+          serviceDuration
+        }
+      })
+    })
+
+    if (!replyResponse.ok) {
+      throw new Error('답변 초안 생성 실패')
+    }
+
+    const { replyDraft } = await replyResponse.json()
+
     // Gmail 설정 (2단계 인증 + 앱 비밀번호)
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // your-email@gmail.com
-        pass: process.env.EMAIL_PASS, // Gmail 앱 비밀번호 (16자리)
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
-      // 추가 설정 (안정성 향상)
       secure: true,
-      logger: true, // 디버깅용
-      debug: true,  // 디버깅용
+      logger: true,
+      debug: true,
     })
 
     // 서비스 타입에 따른 설명
@@ -85,6 +116,10 @@ ${message || '특별한 요청사항 없음'}
 2. 해당 날짜/시간 서비스 가능 여부 확인
 3. 견적 산출 및 상세 상담 진행
 4. 예약 확정 처리
+
+📝 답변 초안
+━━━━━━━━━━━━━━━━━
+${replyDraft}
 
 고객 연락처: ${phone}
     `.trim()
@@ -143,13 +178,14 @@ ${message || '특별한 요청사항 없음'}
       console.log('✅ Gmail 이메일 전송 성공')
     } catch (emailError) {
       console.error('❌ 이메일 전송 실패:', emailError)
-      throw emailError // 상위 catch 블록에서 처리하도록 에러 전파
+      throw emailError
     }
 
     return NextResponse.json({
       success: true,
       message: '문의가 성공적으로 접수되었습니다.',
-      inquiryNumber
+      inquiryNumber,
+      replyDraft
     })
 
   } catch (error) {

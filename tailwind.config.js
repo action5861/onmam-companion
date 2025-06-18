@@ -59,7 +59,7 @@ module.exports = {
           }
         },
         fontFamily: {
-          sans: ['Pretendard', 'ui-sans-serif', 'system-ui'],
+          sans: ['var(--font-pretendard)', 'ui-sans-serif', 'system-ui'],
         },
         fontWeight: {
           400: '400',

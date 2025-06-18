@@ -32,19 +32,19 @@ const benefits = [
   {
     title: '전문 매니저의 케어',
     description: '의료 동행 경험이 풍부한 전문 매니저가 어르신의 상태와 필요에 맞는 맞춤형 서비스를 제공합니다.',
-    imageUrl: '/images/woman.png',
+    imageUrl: '/images/woman.webp',
     imageAlt: '전문 케어 서비스'
   },
   {
     title: '안전한 이동',
     description: '전용 차량을 이용하여 어르신을 병원 문 앞까지 편안하고 안전하게 모셔다 드립니다.',
-    imageUrl: '/images/transportation.png',
+    imageUrl: '/images/transportation.webp',
     imageAlt: '안전 이동 서비스'
   },
   {
     title: '효율적인 병원 이용',
     description: '접수, 수납, 진료실 안내, 검사 이동, 약국 방문 등 병원 내 복잡한 절차를 동행 매니저가 함께하며 도와드립니다.',
-    imageUrl: '/images/pharmacy.png',
+    imageUrl: '/images/pharmacy.webp',
     imageAlt: '병원 이용 지원'
   }
 ]
