@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import localFont from 'next/font/local'
@@ -34,6 +34,14 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: '온맘동행 | 지방 거주 어르신 서울/경기 병원 동행 서비스',
   description: '온맘동행이 어르신의 든든한 지킴이가 되어 안전하고 편안한 병원동행을 함께합니다',
+}
+
+// 모바일 반응형을 위한 viewport 설정 추가
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({

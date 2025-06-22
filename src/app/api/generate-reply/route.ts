@@ -254,22 +254,4 @@ function getHospitalSpecificInfo(hospital: string): string {
 • 해당 병원의 접수, 주차, 편의시설 정보를 사전에 확인하겠습니다
 • 병원별 특성에 맞는 최적의 동선으로 안내해드리겠습니다
 • 필요한 서류나 준비사항을 미리 안내해드리겠습니다`
-}
-
-// 이메일 발송 기능 (선택사항)
-export async function sendReplyEmail(replyData: any) {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  })
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: replyData.email,
-    subject: `[온맘동행] ${replyData.name}님 문의 답변 (${replyData.inquiryNumber})`,
-    text: replyData.replyDraft,
-  })
 } 
