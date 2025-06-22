@@ -18,24 +18,38 @@ const HeroSection = () => {
   useEffect(() => {
     // 모바일 감지
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      
+      // 모바일에서는 바로 애니메이션 완료 상태로 설정
+      if (mobile) {
+        setIsTypingComplete(true);
+        setShowAfterTyping(true);
+      }
     };
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    const typewriterElement = typewriterRef.current;
-    if (!typewriterElement) return;
+    // 데스크톱에서만 타이핑 애니메이션 실행
+    if (window.innerWidth > 768) {
+      const typewriterElement = typewriterRef.current;
+      if (!typewriterElement) return;
 
-    const handleAnimationEnd = () => {
-      setIsTypingComplete(true);
-      setShowAfterTyping(true);
-    };
+      const handleAnimationEnd = () => {
+        setIsTypingComplete(true);
+        setShowAfterTyping(true);
+      };
 
-    typewriterElement.addEventListener('animationend', handleAnimationEnd);
+      typewriterElement.addEventListener('animationend', handleAnimationEnd);
+
+      return () => {
+        typewriterElement.removeEventListener('animationend', handleAnimationEnd);
+        window.removeEventListener('resize', checkMobile);
+      };
+    }
 
     return () => {
-      typewriterElement.removeEventListener('animationend', handleAnimationEnd);
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
@@ -69,21 +83,28 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* 타이핑 애니메이션 - 모바일에서는 다른 방식으로 */}
+              {/* 타이핑 애니메이션 - 모바일과 데스크톱 분리 */}
               <div className="w-full mb-6 sm:mb-12">
                 {isMobile ? (
-                  // 모바일: 타이핑 애니메이션 없이 그냥 표시
-                  <div className="w-full bg-primary-50 px-4 py-3 rounded-lg mx-auto max-w-full">
-                    <span className={`block text-lg sm:text-xl text-center ${inter.className} leading-relaxed`}>
-                      "멀리 있어도<br />괜찮습니다."
-                    </span>
+                  // 모바일: 타이핑 애니메이션 없이 바로 표시
+                  <div className="w-full max-w-full mx-auto px-2">
+                    <div className="bg-primary-50 px-3 py-3 rounded-lg w-full">
+                      <span className={`block text-lg leading-tight ${inter.className} text-center`}>
+                        "멀리 있어도<br />괜찮습니다."
+                      </span>
+                    </div>
                   </div>
                 ) : (
                   // 데스크톱: 기존 타이핑 애니메이션
-                  <div className="typewriter-container max-w-full">
+                  <div className="typewriter-container max-w-full overflow-hidden">
                     <span
                       ref={typewriterRef}
-                      className={`block text-2xl md:text-3xl lg:text-4xl xl:text-5xl bg-primary-50 px-6 py-4 rounded-lg ${inter.className} text-center typewriter-text whitespace-nowrap`}
+                      className={`block text-2xl md:text-3xl lg:text-4xl xl:text-5xl bg-primary-50 px-6 py-4 rounded-lg ${inter.className} text-center typewriter-text`}
+                      style={{ 
+                        whiteSpace: 'nowrap',
+                        maxWidth: '100%',
+                        overflow: 'hidden'
+                      }}
                     >
                       "멀리 있어도 괜찮습니다."
                     </span>
@@ -92,7 +113,7 @@ const HeroSection = () => {
               </div>
               
               <div className={`w-full transition-all duration-500 ${showAfterTyping || isMobile ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-                <div className="w-full">
+                <div className="w-full px-2">
                   <span className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-gray-800 text-center font-bold leading-tight">
                     이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고
                   </span>
@@ -101,13 +122,13 @@ const HeroSection = () => {
                   </span>
                 </div>
                 
-                <p className="w-full text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 mt-4 sm:mt-6 md:mt-8 lg:mt-10 animate-slide-up leading-relaxed text-center max-w-full">
+                <p className="w-full text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 mt-4 sm:mt-6 md:mt-8 lg:mt-10 animate-slide-up leading-relaxed text-center max-w-full px-2">
                   지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br className="hidden sm:block" />
                   <span className="block sm:inline">공항·KTX역·터미널 마중부터 병원 진료, 안전 귀가까지</span><br className="hidden sm:block" />
                   <span className="block sm:inline">모든 과정을 전문 매니저가 함께합니다</span>
                 </p>
                 
-                <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 mb-6 sm:mb-8">
+                <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 mb-6 sm:mb-8 px-4">
                   <Button 
                     variant="primary" 
                     size="lg" 
