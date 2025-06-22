@@ -71,7 +71,7 @@ const HeroSection = () => {
                 </span>
                 <p className="text-xl text-gray-600 mb-8 mt-10 animate-slide-up">
                   지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br />
-                  공항·KTX역·터미널 마중부터 병원 진료 동행, 안전한 귀가까지<br />
+                  공항·KTX역·터미널 마중부터 병원 진료,안전 귀가까지<br />
                   모든 과정을 전문 매니저가 함께합니다
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
@@ -107,7 +107,7 @@ const HeroSection = () => {
                   병원 동행 서비스
                 </h3>
                 <p className="text-xs md:text-sm text-gray-600">
-                  지방 거주 어르신들의 서울/경기 대형병원 진료를 위한 전문 케어 서비스
+                  지방 거주 어르신들의 서울/경기 대형병원 진료 위한 전문 케어 서비스
                 </p>
               </div>
             </div>

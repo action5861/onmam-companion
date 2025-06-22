@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ServiceCard from '@/components/ServiceCard'
 
 const BenefitsSection = () => {
+  // 현재 표시할 혜택 인덱스 (0-2)
+  const [currentBenefitIndex, setCurrentBenefitIndex] = useState(0)
+
+  // 다음 혜택으로 이동
+  const handleNextBenefit = () => {
+    setCurrentBenefitIndex(prev => (prev + 1) % 3)
+  }
+
+  // 이전 혜택으로 이동
+  const handlePrevBenefit = () => {
+    setCurrentBenefitIndex(prev => prev === 0 ? 2 : prev - 1)
+  }
+
   return (
     <section className="section bg-gray-50" id="benefits">
       <div className="container">
@@ -12,16 +25,75 @@ const BenefitsSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {benefits.map((benefit, index) => (
-            <ServiceCard
-              key={index}
-              title={benefit.title}
-              description={benefit.description}
-              imageUrl={benefit.imageUrl}
-              imageAlt={benefit.imageAlt}
-            />
-          ))}
+        {/* 혜택 안내 텍스트 */}
+        <div className="text-center mt-8 mb-6">
+          <p className="text-lg text-gray-700 mb-2">
+            <span className="font-semibold text-primary-600">3가지 특별한 혜택</span>을 확인해보세요
+          </p>
+          <p className="text-sm text-gray-500">
+            화살표를 클릭하여 다음 혜택을 확인하세요
+          </p>
+        </div>
+
+        {/* 혜택 카드 섹션 */}
+        <div className="relative max-w-2xl mx-auto">
+          <ServiceCard
+            title={benefits[currentBenefitIndex].title}
+            description={benefits[currentBenefitIndex].description}
+            imageUrl={benefits[currentBenefitIndex].imageUrl}
+            imageAlt={benefits[currentBenefitIndex].imageAlt}
+          />
+          
+          {/* 이전 버튼 */}
+          <button
+            onClick={handlePrevBenefit}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
+            aria-label="이전 혜택"
+          >
+            <svg 
+              className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M15 19l-7-7 7-7" 
+              />
+            </svg>
+          </button>
+          
+          {/* 다음 버튼 */}
+          <button
+            onClick={handleNextBenefit}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
+            aria-label="다음 혜택"
+          >
+            <svg 
+              className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M9 5l7 7-7 7" 
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* 현재 혜택 인디케이터 */}
+        <div className="text-center mt-6">
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md">
+            <span className="text-sm text-gray-600">혜택</span>
+            <span className="text-lg font-bold text-primary-600">{currentBenefitIndex + 1}</span>
+            <span className="text-sm text-gray-400">/ 3</span>
+          </div>
         </div>
       </div>
     </section>

@@ -7,6 +7,9 @@ const ServicesSection = () => {
   const [currentImImage, setCurrentImImage] = useState(1)
   const [isKakaoTransitioning, setIsKakaoTransitioning] = useState(false)
   const [isImTransitioning, setIsImTransitioning] = useState(false)
+  
+  // 현재 표시할 서비스 인덱스 (0-5)
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
 
   useEffect(() => {
     const kakaoInterval = setInterval(() => {
@@ -31,6 +34,16 @@ const ServicesSection = () => {
     }
   }, [])
 
+  // 다음 서비스로 이동
+  const handleNextService = () => {
+    setCurrentServiceIndex(prev => (prev + 1) % 6)
+  }
+
+  // 이전 서비스로 이동
+  const handlePrevService = () => {
+    setCurrentServiceIndex(prev => prev === 0 ? 5 : prev - 1)
+  }
+
   return (
     <section className="section bg-gray-50" id="services">
       <div className="container">
@@ -42,16 +55,75 @@ const ServicesSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              title={service.title}
-              description={service.description}
-              imageUrl={service.imageUrl}
-              imageAlt={service.imageAlt}
-            />
-          ))}
+        {/* 서비스 안내 텍스트 */}
+        <div className="text-center mt-8 mb-6">
+          <p className="text-lg text-gray-700 mb-2">
+            <span className="font-semibold text-primary-600">6개의 서비스</span>를 확인해보세요
+          </p>
+          <p className="text-sm text-gray-500">
+            화살표를 클릭하여 다음 서비스를 확인하세요
+          </p>
+        </div>
+
+        {/* 서비스 카드 섹션 */}
+        <div className="relative max-w-2xl mx-auto">
+          <ServiceCard
+            title={services[currentServiceIndex].title}
+            description={services[currentServiceIndex].description}
+            imageUrl={services[currentServiceIndex].imageUrl}
+            imageAlt={services[currentServiceIndex].imageAlt}
+          />
+          
+          {/* 이전 버튼 */}
+          <button
+            onClick={handlePrevService}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
+            aria-label="이전 서비스"
+          >
+            <svg 
+              className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M15 19l-7-7 7-7" 
+              />
+            </svg>
+          </button>
+          
+          {/* 다음 버튼 */}
+          <button
+            onClick={handleNextService}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
+            aria-label="다음 서비스"
+          >
+            <svg 
+              className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M9 5l7 7-7 7" 
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* 현재 서비스 인디케이터 */}
+        <div className="text-center mt-6">
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md">
+            <span className="text-sm text-gray-600">서비스</span>
+            <span className="text-lg font-bold text-primary-600">{currentServiceIndex + 1}</span>
+            <span className="text-sm text-gray-400">/ 6</span>
+          </div>
         </div>
 
         {/* 어르신 전용차량 소개 섹션 */}
@@ -126,7 +198,7 @@ const services = [
     imageAlt: '교통 허브 픽업 서비스'
   },
   {
-    title: '병원까지 편안한 이동 (차량 지원)',
+    title: '병원까지 편안한 이동',
     description: '전용 차량을 이용하여 어르신을 병원 문 앞까지 편안하고 안전하게 모셔다 드립니다.',
     imageUrl: '/images/transportation.webp',
     imageAlt: '병원 이동 서비스'

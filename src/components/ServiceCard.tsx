@@ -21,7 +21,7 @@ const ServiceCard = memo(({
   return (
     <div className={`group bg-white rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-primary-100 hover:-translate-y-1 ${className}`}>
       {imageUrl && (
-        <div className="relative w-full h-64 mb-4 overflow-hidden rounded-lg">
+        <div className="relative w-full aspect-[4/3] mb-4 overflow-hidden rounded-lg">
           <Image
             src={imageUrl}
             alt={imageAlt}

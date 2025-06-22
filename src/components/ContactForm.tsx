@@ -25,6 +25,7 @@ const ContactForm = () => {
     success: boolean;
     message: string;
   } | null>(null)
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -57,6 +58,9 @@ const ContactForm = () => {
           success: true,
           message: result.message
         })
+        
+        // 성공 팝업 표시
+        setShowSuccessPopup(true)
         
         // 폼 초기화
         setFormData({
@@ -95,299 +99,330 @@ const ContactForm = () => {
       // 5초 후 메시지 제거
       setTimeout(() => {
         setSubmitResult(null)
-      }, 5000)
+      }, 3000)
     }
   }
   
+  const closeSuccessPopup = () => {
+    setShowSuccessPopup(false)
+  }
+  
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-custom p-8">
-      <h3 className="text-2xl font-semibold mb-6">서비스 문의하기</h3>
-      
-      {submitResult && (
-        <div className={`p-4 mb-6 rounded-lg ${
-          submitResult.success 
-            ? 'bg-green-50 text-green-700 border border-green-200' 
-            : 'bg-red-50 text-red-700 border border-red-200'
-        }`}>
-          {submitResult.message}
-        </div>
-      )}
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* 서비스 선택 */}
-        <div className="form-group md:col-span-2">
-          <label className="form-label">서비스 선택 <span className="text-red-500">*</span></label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="relative">
-              <input
-                type="radio"
-                id="homeToHome"
-                name="serviceType"
-                value="homeToHome"
-                checked={formData.serviceType === 'homeToHome'}
-                onChange={handleChange}
-                className="sr-only peer"
-                required
-              />
-              <label
-                htmlFor="homeToHome"
-                className="flex flex-col items-center justify-center p-4 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary-600 peer-checked:text-primary-600 hover:bg-gray-50"
-              >
-                <span className="text-2xl mb-2">🏠→🏥→🏠</span>
-                <span className="font-medium">Home to Home</span>
-                <span className="text-sm text-center mt-1">집에서 집까지, 완벽한 프리미엄 케어</span>
-              </label>
-            </div>
-            
-            <div className="relative">
-              <input
-                type="radio"
-                id="transportHub"
-                name="serviceType"
-                value="transportHub"
-                checked={formData.serviceType === 'transportHub'}
-                onChange={handleChange}
-                className="sr-only peer"
-                required
-              />
-              <label
-                htmlFor="transportHub"
-                className="flex flex-col items-center justify-center p-4 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary-600 peer-checked:text-primary-600 hover:bg-gray-50"
-              >
-                <span className="text-2xl mb-2">🚉</span>
-                <span className="font-medium">교통허브</span>
-                <span className="text-sm text-center mt-1">KTX역/터미널/공항에서 만나 병원까지</span>
-              </label>
+    <>
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-custom p-8">
+        <h3 className="text-2xl font-semibold mb-6">서비스 문의하기</h3>
+        
+        {submitResult && (
+          <div className={`p-4 mb-6 rounded-lg ${
+            submitResult.success 
+              ? 'bg-green-50 text-green-700 border border-green-200' 
+              : 'bg-red-50 text-red-700 border border-red-200'
+          }`}>
+            {submitResult.message}
+          </div>
+        )}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* 서비스 선택 */}
+          <div className="form-group md:col-span-2">
+            <label className="form-label">서비스 선택 <span className="text-red-500">*</span></label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="relative">
+                <input
+                  type="radio"
+                  id="homeToHome"
+                  name="serviceType"
+                  value="homeToHome"
+                  checked={formData.serviceType === 'homeToHome'}
+                  onChange={handleChange}
+                  className="sr-only peer"
+                  required
+                />
+                <label
+                  htmlFor="homeToHome"
+                  className="flex flex-col items-center justify-center p-6 text-gray-500 bg-white border-2 border-gray-200 rounded-xl cursor-pointer transition-all duration-200 ease-in-out peer-checked:border-primary-600 peer-checked:text-primary-600 peer-checked:bg-primary-50 peer-checked:shadow-lg hover:border-primary-400 hover:bg-primary-50 hover:text-primary-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  <span className="text-3xl mb-3">🏠→🏥→🏠</span>
+                  <span className="font-semibold text-lg mb-2">Home to Home</span>
+                  <span className="text-sm text-center leading-relaxed">집에서 집까지, 완벽한 프리미엄 케어</span>
+                </label>
+              </div>
+              
+              <div className="relative">
+                <input
+                  type="radio"
+                  id="transportHub"
+                  name="serviceType"
+                  value="transportHub"
+                  checked={formData.serviceType === 'transportHub'}
+                  onChange={handleChange}
+                  className="sr-only peer"
+                  required
+                />
+                <label
+                  htmlFor="transportHub"
+                  className="flex flex-col items-center justify-center p-6 text-gray-500 bg-white border-2 border-gray-200 rounded-xl cursor-pointer transition-all duration-200 ease-in-out peer-checked:border-primary-600 peer-checked:text-primary-600 peer-checked:bg-primary-50 peer-checked:shadow-lg hover:border-primary-400 hover:bg-primary-50 hover:text-primary-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  <span className="text-3xl mb-3">🚉</span>
+                  <span className="font-semibold text-lg mb-2">교통허브</span>
+                  <span className="text-sm text-center leading-relaxed">KTX역/터미널/공항에서 만나 병원 진료 후 다시 교통허브</span>
+                </label>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* 서비스 이용시간 */}
-        <div className="form-group md:col-span-2">
-          <label htmlFor="serviceDuration" className="form-label">서비스 이용시간 <span className="text-red-500">*</span></label>
-          <select
-            id="serviceDuration"
-            name="serviceDuration"
-            value={formData.serviceDuration}
-            onChange={handleChange}
-            className="input"
-            required
-          >
-            <option value="">이용시간을 선택해주세요</option>
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
-              <option key={hour} value={`${hour}`}>
-                {hour}시간
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* 신청자 정보 */}
-        <div className="form-group">
-          <label htmlFor="name" className="form-label">신청자 이름 <span className="text-red-500">*</span></label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="input"
-            required
-            placeholder="예: 홍길동"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="phone" className="form-label">연락처 <span className="text-red-500">*</span></label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="input"
-            required
-            placeholder="예: 010-1234-5678"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="email" className="form-label">이메일 <span className="text-red-500">*</span></label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="input"
-            required
-            placeholder="예: example@gmail.com"
-          />
-          <small className="text-gray-500 text-xs mt-1 block">
-            ※ 비용 내역이 이메일로 전송됩니다
-          </small>
-        </div>
-        
-        {/* 환자 정보 */}
-        <div className="form-group">
-          <label htmlFor="patientName" className="form-label">환자 이름 <span className="text-red-500">*</span></label>
-          <input
-            type="text"
-            id="patientName"
-            name="patientName"
-            value={formData.patientName}
-            onChange={handleChange}
-            className="input"
-            required
-            placeholder="예: 김철수"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="patientAge" className="form-label">환자 나이</label>
-          <input
-            type="text"
-            id="patientAge"
-            name="patientAge"
-            value={formData.patientAge}
-            onChange={handleChange}
-            className="input"
-            placeholder="예: 75"
-          />
-        </div>
-        
-        {/* 병원 정보 */}
-        <div className="form-group">
-          <label htmlFor="hospital" className="form-label">방문 병원 <span className="text-red-500">*</span></label>
-          <input
-            type="text"
-            id="hospital"
-            name="hospital"
-            value={formData.hospital}
-            onChange={handleChange}
-            className="input"
-            required
-            placeholder="예: 서울아산병원"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="date" className="form-label">방문 예정일 <span className="text-red-500">*</span></label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            className="input"
-            required
-            min={new Date().toISOString().split('T')[0]} // 오늘 이후 날짜만 선택 가능
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="time" className="form-label">진료 예약시간 <span className="text-red-500">*</span></label>
-          <select
-            id="time"
-            name="time"
-            value={formData.time}
-            onChange={handleChange}
-            className="input"
-            required
-          >
-            <option value="">시간을 선택해주세요</option>
-            <option value="09:00">오전 9:00</option>
-            <option value="09:30">오전 9:30</option>
-            <option value="10:00">오전 10:00</option>
-            <option value="10:30">오전 10:30</option>
-            <option value="11:00">오전 11:00</option>
-            <option value="11:30">오전 11:30</option>
-            <option value="12:00">오후 12:00</option>
-            <option value="12:30">오후 12:30</option>
-            <option value="13:00">오후 1:00</option>
-            <option value="13:30">오후 1:30</option>
-            <option value="14:00">오후 2:00</option>
-            <option value="14:30">오후 2:30</option>
-            <option value="15:00">오후 3:00</option>
-            <option value="15:30">오후 3:30</option>
-            <option value="16:00">오후 4:00</option>
-            <option value="16:30">오후 4:30</option>
-            <option value="17:00">오후 5:00</option>
-            <option value="17:30">오후 5:30</option>
-          </select>
-          <small className="text-gray-500 text-xs mt-1 block">
-            ※ 실제 예약 가능 여부는 별도 확인 후 안내드립니다
-          </small>
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="departure" className="form-label">출발 지역 <span className="text-red-500">*</span></label>
-          <select
-            id="departure"
-            name="departure"
-            value={formData.departure}
-            onChange={handleChange}
-            className="input"
-            required
-          >
-            <option value="">지역을 선택해주세요</option>
-            <option value="경상권">경상권 (부산/대구/울산/경북/경남)</option>
-            <option value="전라권">전라권 (광주/전남/전북)</option>
-            <option value="충청권">충청권 (대전/세종/충남/충북)</option>
-            <option value="강원권">강원권</option>
-            <option value="제주권">제주권</option>
-            <option value="기타">기타</option>
-          </select>
-        </div>
-      </div>
-      
-      {/* 추가 메시지 */}
-      <div className="form-group mt-4">
-        <label htmlFor="message" className="form-label">추가 문의사항</label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          className="input h-32 resize-none"
-          placeholder="필요한 서비스나 특별히 요청하실 사항이 있으면 알려주세요."
-        />
-      </div>
-      
-      {/* 개인정보 동의 */}
-      <div className="form-group mt-6">
-        <div className="flex items-start">
-          <div className="flex items-center h-5">
-            <input
-              id="agreement"
-              name="agreement"
-              type="checkbox"
-              checked={formData.agreement}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+          {/* 서비스 이용시간 */}
+          <div className="form-group md:col-span-2">
+            <label htmlFor="serviceDuration" className="form-label">서비스 이용시간 <span className="text-red-500">*</span></label>
+            <select
+              id="serviceDuration"
+              name="serviceDuration"
+              value={formData.serviceDuration}
+              onChange={handleChange}
+              className="input"
               required
+            >
+              <option value="">이용시간을 선택해주세요</option>
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                <option key={hour} value={`${hour}`}>
+                  {hour}시간
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-1">후불 결제이기 때문에 이용시간을 1~2시간 여유있게 작성해 주세요</p>
+          </div>
+
+          {/* 신청자 정보 */}
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">신청자 이름 <span className="text-red-500">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="input"
+              required
+              placeholder="예: 홍길동"
             />
           </div>
-          <div className="ml-3 text-sm">
-            <label htmlFor="agreement" className="font-medium text-gray-700">개인정보 수집 및 이용 동의 <span className="text-red-500">*</span></label>
-            <p className="text-gray-500">문의 접수 및 답변을 위한 최소한의 개인정보만 수집합니다. 자세한 내용은 개인정보처리방침을 확인해주세요.</p>
+          
+          <div className="form-group">
+            <label htmlFor="phone" className="form-label">연락처 <span className="text-red-500">*</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="input"
+              required
+              placeholder="예: 010-1234-5678"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">이메일 <span className="text-red-500">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="input"
+              required
+              placeholder="예: example@gmail.com"
+            />
+            <small className="text-gray-500 text-xs mt-1 block">
+              ※ 비용 내역이 이메일로 전송됩니다
+            </small>
+          </div>
+          
+          {/* 환자 정보 */}
+          <div className="form-group">
+            <label htmlFor="patientName" className="form-label">환자 이름 <span className="text-red-500">*</span></label>
+            <input
+              type="text"
+              id="patientName"
+              name="patientName"
+              value={formData.patientName}
+              onChange={handleChange}
+              className="input"
+              required
+              placeholder="예: 김철수"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="patientAge" className="form-label">환자 나이</label>
+            <input
+              type="text"
+              id="patientAge"
+              name="patientAge"
+              value={formData.patientAge}
+              onChange={handleChange}
+              className="input"
+              placeholder="예: 75"
+            />
+          </div>
+          
+          {/* 병원 정보 */}
+          <div className="form-group">
+            <label htmlFor="hospital" className="form-label">방문 병원 <span className="text-red-500">*</span></label>
+            <input
+              type="text"
+              id="hospital"
+              name="hospital"
+              value={formData.hospital}
+              onChange={handleChange}
+              className="input"
+              required
+              placeholder="예: 서울아산병원"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="date" className="form-label">방문 예정일 <span className="text-red-500">*</span></label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              className="input"
+              required
+              min={new Date().toISOString().split('T')[0]} // 오늘 이후 날짜만 선택 가능
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="time" className="form-label">진료 예약시간 <span className="text-red-500">*</span></label>
+            <select
+              id="time"
+              name="time"
+              value={formData.time}
+              onChange={handleChange}
+              className="input"
+              required
+            >
+              <option value="">시간을 선택해주세요</option>
+              <option value="09:00">오전 9:00</option>
+              <option value="09:30">오전 9:30</option>
+              <option value="10:00">오전 10:00</option>
+              <option value="10:30">오전 10:30</option>
+              <option value="11:00">오전 11:00</option>
+              <option value="11:30">오전 11:30</option>
+              <option value="12:00">오후 12:00</option>
+              <option value="12:30">오후 12:30</option>
+              <option value="13:00">오후 1:00</option>
+              <option value="13:30">오후 1:30</option>
+              <option value="14:00">오후 2:00</option>
+              <option value="14:30">오후 2:30</option>
+              <option value="15:00">오후 3:00</option>
+              <option value="15:30">오후 3:30</option>
+              <option value="16:00">오후 4:00</option>
+              <option value="16:30">오후 4:30</option>
+              <option value="17:00">오후 5:00</option>
+              <option value="17:30">오후 5:30</option>
+            </select>
+            <small className="text-gray-500 text-xs mt-1 block">
+              ※ 실제 예약 가능 여부는 별도 확인 후 안내드립니다
+            </small>
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="departure" className="form-label">출발 지역 <span className="text-red-500">*</span></label>
+            <select
+              id="departure"
+              name="departure"
+              value={formData.departure}
+              onChange={handleChange}
+              className="input"
+              required
+            >
+              <option value="">지역을 선택해주세요</option>
+              <option value="경상권">경상권 (부산/대구/울산/경북/경남)</option>
+              <option value="전라권">전라권 (광주/전남/전북)</option>
+              <option value="충청권">충청권 (대전/세종/충남/충북)</option>
+              <option value="강원권">강원권</option>
+              <option value="제주권">제주권</option>
+              <option value="기타">기타</option>
+            </select>
           </div>
         </div>
-      </div>
-      
-      {/* 제출 버튼 */}
-      <div className="mt-8">
-        <Button
-          type="submit"
-          variant="primary"
-          size="lg"
-          fullWidth
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? '접수 중...' : '문의하기'}
-        </Button>
-      </div>
-    </form>
+        
+        {/* 추가 메시지 */}
+        <div className="form-group mt-4">
+          <label htmlFor="message" className="form-label">추가 문의사항</label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            className="input h-32 resize-none"
+            placeholder="필요한 서비스나 특별히 요청하실 사항이 있으면 알려주세요."
+          />
+        </div>
+        
+        {/* 개인정보 동의 */}
+        <div className="form-group mt-6">
+          <div className="flex items-start">
+            <div className="flex items-center h-5">
+              <input
+                id="agreement"
+                name="agreement"
+                type="checkbox"
+                checked={formData.agreement}
+                onChange={handleCheckboxChange}
+                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                required
+              />
+            </div>
+            <div className="ml-3 text-sm">
+              <label htmlFor="agreement" className="font-medium text-gray-700">개인정보 수집 및 이용 동의 <span className="text-red-500">*</span></label>
+              <p className="text-gray-500">문의 접수 및 답변을 위한 최소한의 개인정보만 수집합니다. 자세한 내용은 개인정보처리방침을 확인해주세요.</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* 제출 버튼 */}
+        <div className="mt-8">
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? '접수 중...' : '문의하기'}
+          </Button>
+        </div>
+      </form>
+
+      {/* 성공 팝업 모달 */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">문의 접수 완료!</h3>
+            <p className="text-gray-600 mb-6">
+              서비스 문의하기가 성공적으로 이루어졌습니다.<br />
+              2시간 이내 안내 메일 및 전화로 연락드리겠습니다.
+            </p>
+            <button
+              onClick={closeSuccessPopup}
+              className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

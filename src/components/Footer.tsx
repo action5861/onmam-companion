@@ -43,7 +43,7 @@ const Footer = () => {
                 <Link href="#process" className="hover:text-white">이용 방법</Link>
               </li>
               <li>
-                <Link href="#testimonials" className="hover:text-white">이용 후기</Link>
+                <Link href="/testimonials" className="hover:text-white">이용 후기</Link>
               </li>
             </ul>
           </div>
@@ -62,7 +62,7 @@ const Footer = () => {
                 <Link href="/privacy" className="hover:text-white">개인정보처리방침</Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white">문의하기</Link>
+                <Link href="#contact" className="hover:text-white">문의하기</Link>
               </li>
             </ul>
           </div>
@@ -78,7 +78,7 @@ const Footer = () => {
             <div className="flex space-x-4">
               <Link href="/terms" className="hover:text-white">이용약관</Link>
               <Link href="/privacy" className="hover:text-white">개인정보처리방침</Link>
-              <Link href="/contact" className="hover:text-white">고객센터</Link>
+              <Link href="#contact" className="hover:text-white">고객센터</Link>
             </div>
           </div>
         </div>
