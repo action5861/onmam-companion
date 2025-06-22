@@ -1,4 +1,5 @@
 import './globals.css'
+import './mobile-specific.css'
 import type { Metadata, Viewport } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -36,12 +37,13 @@ export const metadata: Metadata = {
   description: '온맘동행이 어르신의 든든한 지킴이가 되어 안전하고 편안한 병원동행을 함께합니다',
 }
 
-// 모바일 반응형을 위한 viewport 설정 추가
+// 모바일 반응형을 위한 viewport 설정 강화
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover'
 }
 
 export default function RootLayout({
@@ -50,10 +52,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ko" className={pretendard.variable}>
-      <body className="min-h-screen flex flex-col">
+    <html lang="ko" className={`${pretendard.variable} overflow-x-hidden`}>
+      <head>
+        {/* 추가 viewport 메타 태그 - 호환성을 위해 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      </head>
+      <body className="min-h-screen flex flex-col overflow-x-hidden">
         <Header />
-        <main className="flex-grow">
+        <main className="flex-grow overflow-x-hidden">
           {children}
         </main>
         <Footer />

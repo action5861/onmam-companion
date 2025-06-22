@@ -1,0 +1,185 @@
+/* mobile-specific.css - 모바일 전용 스타일 */
+
+/* 모바일 기본 설정 강화 */
+@media screen and (max-width: 768px) {
+  html {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+  }
+  
+  body {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* 모든 섹션과 컨테이너 강제 제한 */
+  section,
+  .container,
+  main,
+  div {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* 히어로 섹션 모바일 최적화 */
+  .hero-section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+  }
+  
+  /* 타이핑 텍스트 모바일 완전 재정의 */
+  .typewriter-text,
+  .typewriter-text-second,
+  .typewriter-text-third {
+    animation: none !important;
+    border-right: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    display: block !important;
+    word-break: keep-all !important;
+    word-wrap: break-word !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* 타이핑 컨테이너 모바일 재정의 */
+  .typewriter-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  /* 그리드 시스템 모바일 최적화 */
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* 텍스트 요소 모바일 최적화 */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(1.25rem, 5vw, 2.5rem) !important;
+    line-height: 1.3 !important;
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    text-align: center !important;
+    word-break: keep-all !important;
+    word-wrap: break-word !important;
+  }
+  
+  p {
+    font-size: clamp(0.875rem, 4vw, 1.125rem) !important;
+    line-height: 1.5 !important;
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    word-break: keep-all !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* 버튼 모바일 최적화 */
+  .btn,
+  button {
+    width: calc(100% - 2rem) !important;
+    max-width: 300px !important;
+    margin: 0.5rem auto !important;
+    display: block !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  /* 이미지 컨테이너 모바일 최적화 */
+  .relative {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    overflow: hidden !important;
+  }
+  
+  /* 패딩 및 마진 모바일 조정 */
+  .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .px-6 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  
+  .mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* 컨테이너 최대 너비 제한 */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl,
+  .max-w-2xl,
+  .max-w-xl {
+    max-width: calc(100vw - 2rem) !important;
+    width: calc(100vw - 2rem) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* 매우 작은 화면 (375px 이하) */
+@media screen and (max-width: 375px) {
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  p {
+    font-size: 0.875rem !important;
+  }
+  
+  .btn {
+    font-size: 0.875rem !important;
+    padding: 0.625rem 0.875rem !important;
+  }
+}
+
+/* 아주 작은 화면 (320px 이하) */
+@media screen and (max-width: 320px) {
+  .container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  h1 {
+    font-size: 1.25rem !important;
+  }
+  
+  h2 {
+    font-size: 1.125rem !important;
+  }
+  
+  .btn {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+} 

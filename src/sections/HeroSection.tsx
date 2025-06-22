@@ -18,44 +18,41 @@ const HeroSection = () => {
   useEffect(() => {
     // 모바일 감지
     const checkMobile = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobile(mobile);
-      
-      // 모바일에서는 바로 애니메이션 완료 상태로 설정
-      if (mobile) {
-        setIsTypingComplete(true);
-        setShowAfterTyping(true);
-      }
+      setIsMobile(window.innerWidth <= 768);
     };
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // 데스크톱에서만 타이핑 애니메이션 실행
-    if (window.innerWidth > 768) {
-      const typewriterElement = typewriterRef.current;
-      if (!typewriterElement) return;
-
-      const handleAnimationEnd = () => {
-        setIsTypingComplete(true);
-        setShowAfterTyping(true);
-      };
-
-      typewriterElement.addEventListener('animationend', handleAnimationEnd);
-
-      return () => {
-        typewriterElement.removeEventListener('animationend', handleAnimationEnd);
-        window.removeEventListener('resize', checkMobile);
-      };
+    // 모바일에서는 바로 애니메이션 완료 상태로 설정
+    if (window.innerWidth <= 768) {
+      setIsTypingComplete(true);
+      setShowAfterTyping(true);
+      return;
     }
+    
+    const typewriterElement = typewriterRef.current;
+    if (!typewriterElement) return;
+
+    const handleAnimationEnd = () => {
+      setIsTypingComplete(true);
+      setShowAfterTyping(true);
+    };
+
+    typewriterElement.addEventListener('animationend', handleAnimationEnd);
 
     return () => {
+      typewriterElement.removeEventListener('animationend', handleAnimationEnd);
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28 bg-gradient-to-r from-blue-50 to-teal-50">
+    <section className="hero-section relative w-full overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28 bg-gradient-to-r from-blue-50 to-teal-50" style={{
+      width: '100vw',
+      maxWidth: '100vw',
+      overflowX: 'hidden'
+    }}>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
           <div className="w-full text-center">
