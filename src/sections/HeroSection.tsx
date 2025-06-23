@@ -44,11 +44,11 @@ const HeroSection = () => {
 
   return (
     <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-to-r from-blue-50 to-teal-50">
-      <div className="container relative z-20">
+      <div className="container relative z-20 px-2 sm:px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <div className="text-center">
              {/* <h1> 태그가 주변을 감싸고 있어 구조적으로 문제가 있었기에, 적절한 <div>로 변경했습니다. */}
-            <div className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in text-center">
+            <div className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in text-center -ml-2 sm:ml-0">
               <div className="group relative mx-auto flex items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] mb-8">
                 <span
                   className={cn(

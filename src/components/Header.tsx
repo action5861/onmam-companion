@@ -85,7 +85,7 @@ const Header = () => {
           isScrolled || !isHomePage ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
         }`}
       >
-        <div className="container flex justify-between items-center">
+        <div className="container flex justify-between items-center px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center">
             <div className="relative h-10 w-40">
               {/* 로고 이미지가 없는 경우 텍스트로 대체 */}
@@ -135,7 +135,7 @@ const Header = () => {
 
           {/* 모바일 메뉴 버튼 */}
           <button 
-            className="md:hidden text-gray-700 focus:outline-none"
+            className="md:hidden text-gray-700 focus:outline-none ml-4"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="메뉴 열기"
           >
