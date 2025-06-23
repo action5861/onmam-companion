@@ -48,17 +48,123 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="hero-section relative w-full overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28 bg-gradient-to-r from-blue-50 to-teal-50" style={{
-      width: '100vw',
-      maxWidth: '100vw',
-      overflowX: 'hidden'
-    }}>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+    <section 
+      className="relative w-full overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28 bg-gradient-to-r from-blue-50 to-teal-50"
+      style={{
+        width: '100vw',
+        maxWidth: '100vw',
+        overflowX: 'hidden'
+      }}
+    >
+      {/* 모바일 전용 컨테이너 */}
+      <div className="block md:hidden w-full px-4 relative z-20" style={{ maxWidth: '100vw' }}>
+        <div className="w-full text-center">
+          {/* 프리미엄 서비스 배지 - 모바일 */}
+          <div className="w-full flex justify-center mb-6">
+            <div className="group relative flex items-center justify-center rounded-full px-3 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] max-w-[90vw]">
+              <span
+                className={cn(
+                  "absolute inset-0 block h-full w-full animate-gradient rounded-[inherit] bg-gradient-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-[length:300%_100%] p-[1px]",
+                )}
+                style={{
+                  WebkitMask:
+                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "destination-out",
+                  mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  maskComposite: "subtract",
+                  WebkitClipPath: "padding-box",
+                }}
+              />
+              <AnimatedGradientText className="text-sm font-medium whitespace-nowrap">
+                프리미엄 병원동행 서비스
+              </AnimatedGradientText>
+            </div>
+          </div>
+          
+          {/* 모바일 타이핑 텍스트 - 가로 스크롤 방지 */}
+          <div className="w-full mb-6" style={{ maxWidth: '100vw' }}>
+            <div className="w-full px-2">
+              <div className="bg-primary-50 px-4 py-4 rounded-lg mx-auto" style={{ maxWidth: 'calc(100vw - 2rem)' }}>
+                <span className={`block text-lg leading-relaxed ${inter.className} text-center`}>
+                  "멀리 있어도<br />괜찮습니다."
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          {/* 메인 텍스트 - 모바일 */}
+          <div className="w-full px-2">
+            <h1 className="text-2xl font-bold leading-tight text-center mb-4">
+              <span className="block text-gray-800">
+                이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고
+              </span>
+              <span className="block text-gray-800 mt-1">
+                <span className="text-primary-600 font-extrabold">안심</span>하세요.
+              </span>
+            </h1>
+            
+            <p className="text-sm leading-relaxed text-gray-600 mb-6 text-center">
+              지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br />
+              공항·KTX역·터미널 마중부터 병원 진료, 안전 귀가까지<br />
+              모든 과정을 전문 매니저가 함께합니다
+            </p>
+            
+            {/* 버튼 - 모바일 */}
+            <div className="w-full flex flex-col space-y-3 mb-6">
+              <Button 
+                variant="primary" 
+                size="lg" 
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="w-full max-w-sm mx-auto text-sm"
+              >
+                서비스 문의하기
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                className="w-full max-w-sm mx-auto text-sm"
+              >
+                서비스 알아보기
+              </Button>
+            </div>
+          </div>
+          
+          {/* 이미지 - 모바일 */}
+          <div className="w-full relative rounded-xl overflow-hidden shadow-xl h-64 mt-8">
+            <div className="absolute inset-0 bg-black/20 z-10 flex items-end justify-center pb-4">
+              <div className="bg-white/70 p-3 rounded-lg w-[85%] text-center backdrop-blur-sm">
+                <p className="text-xs font-semibold text-primary-500 mb-1">
+                  60대 이상 어르신 맞춤형
+                </p>
+                <h3 className="text-sm font-bold mb-1 text-gray-700">
+                  병원 동행 서비스
+                </h3>
+                <p className="text-xs text-gray-600 leading-tight">
+                  지방 거주 어르신들의 서울/경기 대형병원 진료를 위한 전문 케어 서비스
+                </p>
+              </div>
+            </div>
+            <Image
+              src="/images/main-banner.webp"
+              alt="병원 동행 서비스"
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+              quality={85}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 데스크톱 전용 컨테이너 */}
+      <div className="hidden md:block w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
           <div className="w-full text-center">
             <h1 className="w-full text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6 animate-fade-in text-center">
               
-              {/* 프리미엄 서비스 배지 */}
+              {/* 프리미엄 서비스 배지 - 데스크톱 */}
               <div className="w-full flex justify-center mb-6 sm:mb-8">
                 <div className="group relative flex items-center justify-center rounded-full px-3 sm:px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] max-w-full">
                   <span
@@ -80,36 +186,24 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* 타이핑 애니메이션 - 모바일과 데스크톱 분리 */}
+              {/* 타이핑 애니메이션 - 데스크톱만 */}
               <div className="w-full mb-6 sm:mb-12">
-                {isMobile ? (
-                  // 모바일: 타이핑 애니메이션 없이 바로 표시
-                  <div className="w-full max-w-full mx-auto px-2">
-                    <div className="bg-primary-50 px-3 py-3 rounded-lg w-full">
-                      <span className={`block text-lg leading-tight ${inter.className} text-center`}>
-                        "멀리 있어도<br />괜찮습니다."
-                      </span>
-                    </div>
-                  </div>
-                ) : (
-                  // 데스크톱: 기존 타이핑 애니메이션
-                  <div className="typewriter-container max-w-full overflow-hidden">
-                    <span
-                      ref={typewriterRef}
-                      className={`block text-2xl md:text-3xl lg:text-4xl xl:text-5xl bg-primary-50 px-6 py-4 rounded-lg ${inter.className} text-center typewriter-text`}
-                      style={{ 
-                        whiteSpace: 'nowrap',
-                        maxWidth: '100%',
-                        overflow: 'hidden'
-                      }}
-                    >
-                      "멀리 있어도 괜찮습니다."
-                    </span>
-                  </div>
-                )}
+                <div className="typewriter-container max-w-full overflow-hidden">
+                  <span
+                    ref={typewriterRef}
+                    className={`block text-2xl md:text-3xl lg:text-4xl xl:text-5xl bg-primary-50 px-6 py-4 rounded-lg ${inter.className} text-center typewriter-text`}
+                    style={{ 
+                      whiteSpace: 'nowrap',
+                      maxWidth: '100%',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    "멀리 있어도 괜찮습니다."
+                  </span>
+                </div>
               </div>
               
-              <div className={`w-full transition-all duration-500 ${showAfterTyping || isMobile ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+              <div className={`w-full transition-all duration-500 ${showAfterTyping ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
                 <div className="w-full px-2">
                   <span className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-gray-800 text-center font-bold leading-tight">
                     이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고
@@ -147,8 +241,9 @@ const HeroSection = () => {
             </h1>
           </div>
           
+          {/* 이미지 - 데스크톱 */}
           <div className={`w-full relative rounded-xl overflow-hidden shadow-xl h-64 sm:h-80 md:h-96 lg:h-[500px] transition-all duration-1000 ease-out
-            ${showAfterTyping || isMobile ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
+            ${showAfterTyping ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
             <div className="absolute inset-0 bg-black/20 z-10 flex items-end justify-center pb-3 sm:pb-4 md:pb-8">
               <div className="bg-white/70 p-2 sm:p-3 md:p-4 rounded-lg w-[90%] sm:w-[85%] md:max-w-[320px] text-center backdrop-blur-sm">
                 <p className="text-xs sm:text-sm md:text-base font-semibold text-primary-500 mb-1">
