@@ -12,27 +12,17 @@ const inter = Inter({ subsets: ['latin'] })
 const HeroSection = () => {
   const [showAfterTyping, setShowAfterTyping] = useState(false);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // 애니메이션 지연을 위한 상태
   const typewriterRef = useRef<HTMLSpanElement>(null);
 
+  // 컴포넌트 마운트 후 애니메이션 클래스 적용을 위해 사용
   useEffect(() => {
-    // 모바일 감지 (더 큰 브레이크포인트 사용)
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 1024);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    // 모바일에서는 바로 애니메이션 완료 상태로 설정
-    if (window.innerWidth <= 1024) {
-      setIsTypingComplete(true);
-      setShowAfterTyping(true);
-      return;
-    }
-    
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
     const typewriterElement = typewriterRef.current;
-    if (!typewriterElement) return;
+    if (!typewriterElement || !isMounted) return;
 
     const handleAnimationEnd = () => {
       setIsTypingComplete(true);
@@ -42,23 +32,20 @@ const HeroSection = () => {
     typewriterElement.addEventListener('animationend', handleAnimationEnd);
 
     return () => {
-      typewriterElement.removeEventListener('animationend', handleAnimationEnd);
-      window.removeEventListener('resize', checkMobile);
+      if (typewriterElement) {
+        typewriterElement.removeEventListener('animationend', handleAnimationEnd);
+      }
     };
-  }, []);
+  }, [isMounted]);
 
   return (
-    <section className="relative w-full bg-gradient-to-r from-blue-50 to-teal-50 pt-16 pb-12 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
-      {/* 표준 컨테이너 - FAQ처럼 안정적 구조 */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 xl:gap-24 items-center">
-          
-          {/* 왼쪽 콘텐츠 영역 */}
-          <div className="text-center lg:text-left">
-            
-            {/* 프리미엄 서비스 배지 */}
-            <div className="flex justify-center lg:justify-start mb-6 lg:mb-8">
-              <div className="group relative flex items-center justify-center rounded-full px-4 py-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
+    <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-to-r from-blue-50 to-teal-50">
+      <div className="container relative z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          <div className="text-center">
+             {/* <h1> 태그가 주변을 감싸고 있어 구조적으로 문제가 있었기에, 적절한 <div>로 변경했습니다. */}
+            <div className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in text-center">
+              <div className="group relative mx-auto flex items-center justify-center rounded-full px-4 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] mb-8">
                 <span
                   className={cn(
                     "absolute inset-0 block h-full w-full animate-gradient rounded-[inherit] bg-gradient-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-[length:300%_100%] p-[1px]",
@@ -72,108 +59,87 @@ const HeroSection = () => {
                     WebkitClipPath: "padding-box",
                   }}
                 />
-                <AnimatedGradientText className="text-sm md:text-base lg:text-lg font-medium whitespace-nowrap">
+                <AnimatedGradientText className="text-2xl md:text-3xl lg:text-4xl font-medium">
                   프리미엄 병원동행 서비스
                 </AnimatedGradientText>
               </div>
-            </div>
-            
-            {/* 타이핑 텍스트 - 단일 구조로 간소화 */}
-            <div className="mb-8 lg:mb-12">
-              {!isMobile ? (
-                // 데스크톱: 타이핑 애니메이션
-                <div className="relative">
+              <div className="relative w-full max-w-[24em] mx-auto">
+                <div className="typewriter-container">
                   <span
                     ref={typewriterRef}
-                    className={`inline-block text-2xl md:text-3xl lg:text-4xl xl:text-5xl bg-primary-50 px-6 py-4 rounded-lg ${inter.className} typewriter-text`}
+                    // ✨✨✨ 핵심 수정 부분 ✨✨✨
+                    // 1. 모바일 폰트 크기를 text-3xl로 줄이고, 화면이 커짐에 따라 폰트도 커지도록 설정
+                    // 2. md 사이즈 이상에서만 whitespace-nowrap(줄바꿈 방지) 적용
+                    // 3. isMounted가 true일 때만 typewriter-text(애니메이션) 클래스 적용
+                    className={`block text-3xl sm:text-4xl mb-12 bg-primary-50 px-6 py-4 rounded-lg ${inter.className} md:whitespace-nowrap text-center ${isMounted ? 'typewriter-text' : ''}`}
                   >
                     "멀리 있어도 괜찮습니다."
                   </span>
                 </div>
-              ) : (
-                // 모바일: 바로 표시
-                <div className="bg-primary-50 px-4 py-4 rounded-lg inline-block">
-                  <span className={`text-lg md:text-xl ${inter.className} leading-relaxed`}>
-                    "멀리 있어도<br />괜찮습니다."
-                  </span>
-                </div>
-              )}
-            </div>
-            
-            {/* 메인 제목 */}
-            <div className={`transition-all duration-500 ${showAfterTyping || isMobile ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 lg:mb-8">
-                <span className="block text-gray-800">
-                  이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고
-                </span>
-                <span className="block text-gray-800 mt-2">
+              </div>
+              <div className={`transition-all duration-500 ${showAfterTyping ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+                <span className="block text-3xl md:text-4xl lg:text-5xl text-gray-800 text-center font-bold">
+                  이제 <span className="text-primary-600 font-extrabold">온맘동행</span>에 맡기고<br />
                   <span className="text-primary-600 font-extrabold">안심</span>하세요.
                 </span>
-              </h1>
-              
-              {/* 설명 텍스트 */}
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mb-8 lg:mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br className="hidden sm:block" />
-                <span className="block sm:inline">공항·KTX역·터미널 마중부터 병원 진료, 안전 귀가까지</span><br className="hidden sm:block" />
-                <span className="block sm:inline">모든 과정을 전문 매니저가 함께합니다</span>
-              </p>
-              
-              {/* 버튼 그룹 */}
-              <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <Button 
-                  variant="primary" 
-                  size="lg" 
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="w-full sm:w-auto text-sm sm:text-base"
-                >
-                  서비스 문의하기
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="w-full sm:w-auto text-sm sm:text-base"
-                >
-                  서비스 알아보기
-                </Button>
+                <p className="text-xl text-gray-600 mb-8 mt-10 animate-slide-up">
+                  지방 거주 어르신의 서울/경기 대형병원 방문을 위해<br />
+                  공항·KTX역·터미널 마중부터 병원 진료,안전 귀가까지<br />
+                  모든 과정을 전문 매니저가 함께합니다
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full sm:w-auto"
+                  >
+                    서비스 문의하기
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full sm:w-auto"
+                  >
+                    서비스 알아보기
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
           
-          {/* 오른쪽 이미지 영역 */}
-          <div className={`relative transition-all duration-1000 ease-out
-            ${showAfterTyping || isMobile ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
-            <div className="relative rounded-xl overflow-hidden shadow-xl h-64 sm:h-80 md:h-96 lg:h-[400px] xl:h-[500px]">
-              <div className="absolute inset-0 bg-black/20 z-10 flex items-end justify-center pb-6">
-                <div className="bg-white/70 p-4 rounded-lg max-w-[85%] text-center backdrop-blur-sm">
-                  <p className="text-xs sm:text-sm font-semibold text-primary-500 mb-1">
-                    60대 이상 어르신 맞춤형
-                  </p>
-                  <h3 className="text-sm sm:text-base md:text-lg font-bold mb-2 text-gray-700">
-                    병원 동행 서비스
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 leading-tight">
-                    지방 거주 어르신들의 서울/경기 대형병원 진료를 위한 전문 케어 서비스
-                  </p>
-                </div>
+          <div className={`relative rounded-xl overflow-hidden shadow-xl h-80 md:h-96 lg:h-[500px] transition-all duration-1000 ease-out
+            ${showAfterTyping ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
+            <div className="absolute inset-0 bg-black/20 z-10 flex items-end justify-center pb-4 md:pb-8">
+              <div className="bg-white/70 p-3 md:p-4 rounded-lg max-w-[85%] md:max-w-[320px] text-center backdrop-blur-sm">
+                <p className="text-sm md:text-base font-semibold text-primary-500 mb-1">
+                  60대 이상 어르신 맞춤형
+                </p>
+                <h3 className="text-lg md:text-xl font-bold mb-1 text-gray-700">
+                  병원 동행 서비스
+                </h3>
+                <p className="text-xs md:text-sm text-gray-600">
+                  지방 거주 어르신들의 서울/경기 대형병원 진료 위한 전문 케어 서비스
+                </p>
               </div>
-              <Image
-                src="/images/main-banner.webp"
-                alt="병원 동행 서비스"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                quality={85}
-              />
             </div>
+            <Image
+              src="/images/main-banner.webp"
+              alt="병원 동행 서비스"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              quality={85}
+            />
           </div>
         </div>
       </div>
       
-      {/* 하단 파도 모양 디자인 */}
+      {/* 파도 모양 디자인 */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full block">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full">
           <path
             fill="#ffffff"
             fillOpacity="1"
