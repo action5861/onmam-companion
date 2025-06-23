@@ -11,32 +11,36 @@ const inter = Inter({ subsets: ['latin'] })
 
 const HeroSection = () => {
   const [showAfterTyping, setShowAfterTyping] = useState(false);
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [isMounted, setIsMounted] = useState(false); // 애니메이션 지연을 위한 상태
   const typewriterRef = useRef<HTMLSpanElement>(null);
 
-  // 컴포넌트 마운트 후 애니메이션 클래스 적용을 위해 사용
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    // --- ✨ 1. 현재 화면이 모바일인지 데스크톱인지 확인 ---
+    // Tailwind CSS의 'md' breakpoint인 768px을 기준으로 삼습니다.
+    const isDesktop = window.innerWidth > 768;
 
-  useEffect(() => {
+    if (!isDesktop) {
+      // 모바일 뷰일 경우, 애니메이션을 기다리지 않고 즉시 모든 콘텐츠를 표시합니다.
+      setShowAfterTyping(true);
+      return;
+    }
+
+    // --- 2. 데스크톱 뷰일 경우에만 애니메이션 종료 이벤트를 기다립니다. ---
     const typewriterElement = typewriterRef.current;
-    if (!typewriterElement || !isMounted) return;
+    if (!typewriterElement) return;
 
     const handleAnimationEnd = () => {
-      setIsTypingComplete(true);
       setShowAfterTyping(true);
     };
 
     typewriterElement.addEventListener('animationend', handleAnimationEnd);
 
+    // 컴포넌트가 사라질 때 이벤트 리스너를 정리합니다.
     return () => {
       if (typewriterElement) {
         typewriterElement.removeEventListener('animationend', handleAnimationEnd);
       }
     };
-  }, [isMounted]);
+  }, []); // 이 useEffect는 컴포넌트가 처음 로드될 때 한 번만 실행됩니다.
 
   return (
     <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-to-r from-blue-50 to-teal-50">
@@ -63,15 +67,12 @@ const HeroSection = () => {
                   프리미엄 병원동행 서비스
                 </AnimatedGradientText>
               </div>
-              <div className="relative w-full max-w-[24em] mx-auto">
+              <div className="relative w-full max-w-[24em] mx-auto min-h-[8rem] md:min-h-0 flex items-center justify-center">
                 <div className="typewriter-container">
                   <span
                     ref={typewriterRef}
-                    // ✨✨✨ 핵심 수정 부분 ✨✨✨
-                    // 1. 모바일 폰트 크기를 text-3xl로 줄이고, 화면이 커짐에 따라 폰트도 커지도록 설정
-                    // 2. md 사이즈 이상에서만 whitespace-nowrap(줄바꿈 방지) 적용
-                    // 3. isMounted가 true일 때만 typewriter-text(애니메이션) 클래스 적용
-                    className={`block text-3xl sm:text-4xl mb-12 bg-primary-50 px-6 py-4 rounded-lg ${inter.className} md:whitespace-nowrap text-center ${isMounted ? 'typewriter-text' : ''}`}
+                    // 데스크톱에서는 애니메이션 클래스('typewriter-text')가 적용됩니다.
+                    className={`block text-3xl sm:text-4xl mb-12 bg-primary-50 px-6 py-4 rounded-lg ${inter.className} md:whitespace-nowrap text-center typewriter-text`}
                   >
                     "멀리 있어도 괜찮습니다."
                   </span>
