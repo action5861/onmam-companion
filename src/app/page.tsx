@@ -71,7 +71,7 @@ export default function Home() {
                 <div className="w-full h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-full"></div>
               </div>
               <p className="text-lg md:text-xl text-gray-600 mt-6 max-w-2xl mx-auto">
-                자매 간호사의 진심 어린 온맘동행 이야기
+                한 간호사의 진심 어린 온맘동행 이야기
               </p>
             </div>
             
@@ -85,11 +85,11 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-primary-600 mb-3">간호사인 우리가 함께 갈 수 없었던 현실</h4>
+                  <h4 className="font-semibold text-primary-600 mb-3">간호사인 내가 함께 갈 수 없었던 현실</h4>
                   <p className="mb-2">"아버지, 제가 시간 되는 날 함께..."</p>
                   <p className="mb-2">"괜찮다, 나 혼자도 잘 할 수 있어."</p>
                   <p className="mb-2">병원 업무 때문에 시간을 낼 수 없었고,</p>
-                  <p>아버지는 우리를 배려하며 혼자 가겠다고 하셨습니다.</p>
+                  <p>아버지는 나를 배려하며 혼자 가겠다고 하셨습니다.</p>
                 </div>
 
                 <div>
@@ -102,18 +102,18 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-primary-600 mb-3">그날 밤, 자매의 다짐</h4>
+                  <h4 className="font-semibold text-primary-600 mb-3">그날 밤, 나의 다짐</h4>
                   <p className="mb-2">"내가 시간을 내서 모시고 왔어야 하는데..."</p>
                   <p className="mb-2"><strong>간호사면서도 정작 우리 아버지는 제대로 돌봐드리지 못했다는 미안함.</strong></p>
                   <p className="mb-2">그리고 깨달았습니다.</p>
-                  <p>우리만의 이야기가 아니라는 것을.</p>
+                  <p>나만의 이야기가 아니라는 것을.</p>
                 </div>
 
                 <div>
                   <h4 className="font-semibold text-primary-600 mb-3">첫 번째 어르신의 한 마디</h4>
                   <p className="mb-2">"고맙습니다. 우리 딸이 함께 온 것 같네요."</p>
                   <p className="mb-2">그 순간 확신했습니다.</p>
-                  <p className="mb-2"><strong>모든 자식들이 우리처럼 미안해하지 않도록,</strong></p>
+                  <p className="mb-2"><strong>모든 자식들이 나처럼 미안해하지 않도록,</strong></p>
                   <p><strong>모든 어르신이 우리 아버지처럼 혼자 고생하지 않도록.</strong></p>
                 </div>
 
@@ -131,49 +131,52 @@ export default function Home() {
               {/* 전문 자격증 섹션 */}
               <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 text-center">📜 전문 자격증</h3>
               <p className="text-base sm:text-lg text-gray-600 mb-8 text-center">
-                간호사의 전문성과 신뢰성을 보장하는 자격증을 갖고 있습니다.
+                간호사의 전문성과 요양보호사의 케어 능력을 갖춘 전문 자격증을 보유하고 있습니다.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* 간호사 자격증 */}
+              <div className="max-w-4xl mx-auto">
+                {/* 통합 자격증 박스 */}
                 <div className="bg-white border-2 border-primary-100 rounded-2xl p-6 shadow-lg">
-                  <h4 className="text-lg sm:text-xl font-bold text-primary-600 mb-6 flex items-center gap-3">
-                    <span className="text-2xl sm:text-3xl">👩‍⚕️</span>
-                    간호사 자격증
-                  </h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 rounded-xl p-4 text-center">
-                      <div className="w-16 h-20 sm:w-20 sm:h-24 bg-gray-200 rounded border-2 border-dashed border-gray-300 mx-auto mb-3 flex items-center justify-center">
-                        <span className="text-gray-500 text-xs">자격증<br/>이미지</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* 간호사 자격증 */}
+                    <div>
+                      <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-6 flex items-center justify-center">
+                        간호사 자격증
+                      </h4>
+                      <div className="flex justify-center">
+                        <div className="bg-gray-50 rounded-xl p-4 text-center min-w-0">
+                          <div className="w-28 h-36 sm:w-32 sm:h-40 mx-auto mb-3 relative">
+                            <Image
+                              src="/images/certificates/nurse-certificate.webp.webp"
+                              alt="간호사 자격증"
+                              fill
+                              className="object-contain rounded border-2 border-gray-300"
+                              sizes="(max-width: 640px) 112px, 128px"
+                              priority
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm sm:text-base font-medium text-gray-700">간호사 자격증 1</p>
                     </div>
-                    <div className="bg-gray-50 rounded-xl p-4 text-center">
-                      <div className="w-16 h-20 sm:w-20 sm:h-24 bg-gray-200 rounded border-2 border-dashed border-gray-300 mx-auto mb-3 flex items-center justify-center">
-                        <span className="text-gray-500 text-xs">자격증<br/>이미지</span>
-                      </div>
-                      <p className="text-sm sm:text-base font-medium text-gray-700">간호사 자격증 2</p>
-                    </div>
-                  </div>
-                </div>
 
-                {/* 요양보호사 자격증 */}
-                <div className="bg-white border-2 border-primary-100 rounded-2xl p-6 shadow-lg">
-                  <h4 className="text-lg sm:text-xl font-bold text-primary-600 mb-6 flex items-center gap-3">
-                    <span className="text-2xl sm:text-3xl">👨‍⚕️</span>
-                    요양보호사 자격증
-                  </h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 rounded-xl p-4 text-center">
-                      <div className="w-16 h-20 sm:w-20 sm:h-24 bg-gray-200 rounded border-2 border-dashed border-gray-300 mx-auto mb-3 flex items-center justify-center">
-                        <span className="text-gray-500 text-xs">자격증<br/>이미지</span>
+                    {/* 요양보호사 자격증 */}
+                    <div>
+                      <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-6 flex items-center justify-center">
+                        요양보호사 자격증
+                      </h4>
+                      <div className="flex justify-center">
+                        <div className="bg-gray-50 rounded-xl p-4 text-center min-w-0">
+                          <div className="w-28 h-36 sm:w-32 sm:h-40 mx-auto mb-3 relative">
+                            <Image
+                              src="/images/certificates/caregiver-certificate.webp.webp"
+                              alt="요양보호사 자격증"
+                              fill
+                              className="object-contain rounded border-2 border-gray-300"
+                              sizes="(max-width: 640px) 112px, 128px"
+                              priority
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm sm:text-base font-medium text-gray-700">요양보호사 자격증 1</p>
-                    </div>
-                    <div className="bg-gray-50 rounded-xl p-4 text-center">
-                      <div className="w-16 h-20 sm:w-20 sm:h-24 bg-gray-200 rounded border-2 border-dashed border-gray-300 mx-auto mb-3 flex items-center justify-center">
-                        <span className="text-gray-500 text-xs">자격증<br/>이미지</span>
-                      </div>
-                      <p className="text-sm sm:text-base font-medium text-gray-700">요양보호사 자격증 2</p>
                     </div>
                   </div>
                 </div>

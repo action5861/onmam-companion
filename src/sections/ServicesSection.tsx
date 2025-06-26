@@ -74,47 +74,89 @@ const ServicesSection = () => {
             imageAlt={services[currentServiceIndex].imageAlt}
           />
           
-          {/* 이전 버튼 */}
-          <button
-            onClick={handlePrevService}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
-            aria-label="이전 서비스"
-          >
-            <svg 
-              className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+          {/* 화살표 버튼: 모바일에서는 아래로 배치 */}
+          <div className="hidden sm:block">
+            {/* 데스크톱: 기존 위치 */}
+            <button
+              onClick={handlePrevService}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
+              aria-label="이전 서비스"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M15 19l-7-7 7-7" 
-              />
-            </svg>
-          </button>
-          
-          {/* 다음 버튼 */}
-          <button
-            onClick={handleNextService}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
-            aria-label="다음 서비스"
-          >
-            <svg 
-              className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+              <svg 
+                className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M15 19l-7-7 7-7" 
+                />
+              </svg>
+            </button>
+            <button
+              onClick={handleNextService}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200"
+              aria-label="다음 서비스"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M9 5l7 7-7 7" 
-              />
-            </svg>
-          </button>
+              <svg 
+                className="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M9 5l7 7-7 7" 
+                />
+              </svg>
+            </button>
+          </div>
+          {/* 모바일: 이미지 아래로 버튼 배치 */}
+          <div className="flex sm:hidden justify-center gap-6 mt-4">
+            <button
+              onClick={handlePrevService}
+              className="w-14 h-14 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              aria-label="이전 서비스"
+            >
+              <svg 
+                className="w-7 h-7 transform group-hover:scale-110 transition-transform duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M15 19l-7-7 7-7" 
+                />
+              </svg>
+            </button>
+            <button
+              onClick={handleNextService}
+              className="w-14 h-14 bg-white hover:bg-gray-50 text-gray-600 hover:text-primary-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group z-10 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              aria-label="다음 서비스"
+            >
+              <svg 
+                className="w-7 h-7 transform group-hover:scale-110 transition-transform duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M9 5l7 7-7 7" 
+                />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* 현재 서비스 인디케이터 */}
@@ -205,7 +247,7 @@ const services = [
   },
   {
     title: '병원 내 모든 과정 밀착 동행 (진료 지원)',
-    description: '접수, 수납, 진료실 안내, 검사 이동, 약국 방문 등 병원 내 복잡한 절차를 동행 매니저가 함께하며 도와드립니다.',
+    description: '접수, 수납, 진료실 안내, 검사 이동, 약국 방문 등 병원 내 복잡한 절차를 동행 매니저가 도와드립니다.',
     imageUrl: '/images/hospital-accompany.webp',
     imageAlt: '병원 내 동행 서비스'
   },

@@ -87,7 +87,7 @@ const Header = () => {
       >
         <div className="container flex justify-between items-center px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center">
-            <div className="relative h-10 w-40">
+            <div className="relative h-10 w-auto min-w-[96px]">
               {/* 로고 이미지가 없는 경우 텍스트로 대체 */}
               <span className="text-2xl font-bold text-primary-600">온맘동행</span>
             </div>
@@ -134,16 +134,17 @@ const Header = () => {
           </nav>
 
           {/* 모바일 메뉴 버튼 */}
-          <button 
-            className="md:hidden text-gray-700 focus:outline-none ml-4"
+          <button
+            className="md:hidden text-gray-700 focus:outline-none w-12 h-12 flex items-center justify-center z-20"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="메뉴 열기"
+            type="button"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-6 w-6" 
-              fill="none" 
-              viewBox="0 0 24 24" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
               {isMobileMenuOpen ? (

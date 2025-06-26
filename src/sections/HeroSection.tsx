@@ -72,7 +72,7 @@ const HeroSection = () => {
                   <span
                     ref={typewriterRef}
                     // 데스크톱에서는 애니메이션 클래스('typewriter-text')가 적용됩니다.
-                    className={`block text-3xl sm:text-4xl mb-12 bg-primary-50 px-6 py-4 rounded-lg ${inter.className} md:whitespace-nowrap text-center typewriter-text`}
+                    className={`block text-4xl sm:text-5xl mb-12 bg-primary-50 px-6 py-4 rounded-lg ${inter.className} md:whitespace-nowrap text-center typewriter-text`}
                   >
                     "멀리 있어도 괜찮습니다."
                   </span>

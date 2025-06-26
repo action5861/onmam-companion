@@ -1,6 +1,6 @@
-/* mobile-specific.css - 모바일 전용 스타일 */
+/* mobile-specific.css - 모바일 전용 스타일 (최종 수정본) */
 
-/* 모바일 기본 설정 강화 */
+/* 모바일 기본 설정 강화 (유지) */
 @media screen and (max-width: 768px) {
   html {
     width: 100vw !important;
@@ -19,27 +19,25 @@
     padding: 0 !important;
   }
   
-  /* 모든 섹션과 컨테이너 강제 제한 */
+  /* [핵심 수정] 모든 div에 width:100%를 강제하던 규칙에서 'div' 선택자 제거 */
   section,
   .container,
-  main,
-  div {
+  main {
     width: 100% !important;
     max-width: 100vw !important;
     overflow-x: hidden !important;
     box-sizing: border-box !important;
   }
   
-  /* 히어로 섹션 모바일 최적화 */
+  /* [정리] 히어로 섹션에서 불필요한 overflow 제거 */
   .hero-section {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     width: 100vw !important;
     max-width: 100vw !important;
-    overflow: hidden !important;
   }
   
-  /* 타이핑 텍스트 모바일 완전 재정의 */
+  /* 타이핑 텍스트 모바일 재정의 (유지) */
   .typewriter-text,
   .typewriter-text-second,
   .typewriter-text-third {
@@ -50,12 +48,12 @@
     white-space: normal !important;
     overflow: visible !important;
     display: block !important;
-    word-break: keep-all !important;
+    word-break: break-all !important;
     word-wrap: break-word !important;
     line-height: 1.4 !important;
   }
   
-  /* 타이핑 컨테이너 모바일 재정의 */
+  /* 타이핑 컨테이너 모바일 재정의 (유지) */
   .typewriter-container {
     width: 100% !important;
     max-width: 100% !important;
@@ -64,7 +62,7 @@
     padding: 0 0.5rem !important;
   }
   
-  /* 그리드 시스템 모바일 최적화 */
+  /* 그리드 시스템 모바일 최적화 (유지) */
   .grid {
     grid-template-columns: 1fr !important;
     gap: 1rem !important;
@@ -72,14 +70,14 @@
     max-width: 100% !important;
   }
   
-  /* 텍스트 요소 모바일 최적화 */
+  /* 텍스트 요소 모바일 최적화 (유지) */
   h1, h2, h3, h4, h5, h6 {
     font-size: clamp(1.25rem, 5vw, 2.5rem) !important;
     line-height: 1.3 !important;
     margin-left: 0.5rem !important;
     margin-right: 0.5rem !important;
     text-align: center !important;
-    word-break: keep-all !important;
+    word-break: break-all !important;
     word-wrap: break-word !important;
   }
   
@@ -88,11 +86,11 @@
     line-height: 1.5 !important;
     margin-left: 0.5rem !important;
     margin-right: 0.5rem !important;
-    word-break: keep-all !important;
+    word-break: break-all !important;
     word-wrap: break-word !important;
   }
   
-  /* 버튼 모바일 최적화 */
+  /* 버튼 모바일 최적화 (유지) */
   .btn,
   button {
     width: calc(100% - 2rem) !important;
@@ -104,16 +102,10 @@
     padding: 0.75rem 1rem !important;
   }
   
-  /* 이미지 컨테이너 모바일 최적화 */
-  .relative {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0.5rem !important;
-    margin-right: 0.5rem !important;
-    overflow: hidden !important;
-  }
+  /* [정리] .relative에 불필요한 스타일 덮어쓰기 규칙 전체 삭제 */
+  /* (삭제됨) .relative { ... } */
   
-  /* 패딩 및 마진 모바일 조정 */
+  /* 패딩 및 마진 모바일 조정 (유지) */
   .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
   .px-6 { padding-left: 1rem !important; padding-right: 1rem !important; }
   .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
@@ -123,7 +115,7 @@
     margin-right: auto !important;
   }
   
-  /* 컨테이너 최대 너비 제한 */
+  /* 컨테이너 최대 너비 제한 (유지) */
   .max-w-7xl,
   .max-w-6xl,
   .max-w-5xl,
@@ -138,24 +130,16 @@
   }
 }
 
-/* 매우 작은 화면 (375px 이하) */
+/* 매우 작은 화면 최적화 (유지) */
 @media screen and (max-width: 375px) {
   .container {
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
   
-  h1 {
-    font-size: 1.5rem !important;
-  }
-  
-  h2 {
-    font-size: 1.25rem !important;
-  }
-  
-  p {
-    font-size: 0.875rem !important;
-  }
+  h1 { font-size: 1.5rem !important; }
+  h2 { font-size: 1.25rem !important; }
+  p { font-size: 0.875rem !important; }
   
   .btn {
     font-size: 0.875rem !important;
@@ -163,23 +147,18 @@
   }
 }
 
-/* 아주 작은 화면 (320px 이하) */
+/* 아주 작은 화면 최적화 (유지) */
 @media screen and (max-width: 320px) {
   .container {
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
   }
   
-  h1 {
-    font-size: 1.25rem !important;
-  }
-  
-  h2 {
-    font-size: 1.125rem !important;
-  }
+  h1 { font-size: 1.25rem !important; }
+  h2 { font-size: 1.125rem !important; }
   
   .btn {
     font-size: 0.75rem !important;
     padding: 0.5rem 0.75rem !important;
   }
-} 
+}
